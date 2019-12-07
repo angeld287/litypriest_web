@@ -2,9 +2,9 @@ type Location
     @model 
     @auth(rules: [
         { allow: owner },
-        { allow: groups, groups: ["company"], operations: [read] }
+        { allow: groups, groups: ["admin"] }
+        { allow: groups, groups: ["priest"], operations: [read] }
         { allow: groups, groups: ["secretary"], operations: [read] }
-        { allow: groups, groups: ["client"], operations: [read] }
     
     ]){
     id: ID!
@@ -15,6 +15,8 @@ type Contact
     @model 
     @auth(rules: [
         { allow: groups, groups: ["admin"] }
+        { allow: groups, groups: ["priest"], operations: [read] },
+        { allow: groups, groups: ["secretary"], operations: [read] },
     ]) {
     id: ID!
     name: String
@@ -26,8 +28,8 @@ type Category
     @auth(rules: [
         # Defaults to use the "owner" field.
         { allow: owner },
-        
-        { allow: groups, groups: ["client"], operations: [read] },
+        { allow: groups, groups: ["admin"] }
+        { allow: groups, groups: ["priest"], operations: [read] },
         { allow: groups, groups: ["secretary"], operations: [read] },
     ]) {
     id: ID!
@@ -36,7 +38,7 @@ type Category
 }
 
 type Event
-    @model(subscriptions: null)
+    @model
     @auth(rules: [
         # Defaults to use the "owner" field.
         { allow: owner },
