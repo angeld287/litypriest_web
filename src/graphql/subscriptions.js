@@ -70,3 +70,75 @@ export const onDeleteCategory = `subscription OnDeleteCategory {
   }
 }
 `;
+export const onCreateEvent = `subscription OnCreateEvent {
+  onCreateEvent {
+    id
+    nombre
+    category {
+      id
+      name
+      description
+    }
+    date
+    description
+    location {
+      id
+      name
+    }
+    contact {
+      id
+      name
+      phone
+    }
+    createdAt
+  }
+}
+`;
+export const onUpdateEvent = `subscription OnUpdateEvent {
+  onUpdateEvent {
+    id
+    nombre
+    category {
+      id
+      name
+      description
+    }
+    date
+    description
+    location {
+      id
+      name
+    }
+    contact {
+      id
+      name
+      phone
+    }
+    createdAt
+  }
+}
+`;
+export const onDeleteEvent = `subscription OnDeleteEvent {
+  onDeleteEvent {
+    id
+    nombre
+    category {
+      id
+      name
+      description
+    }
+    date
+    description
+    location {
+      id
+      name
+    }
+    contact {
+      id
+      name
+      phone
+    }
+    createdAt
+  }
+}
+`;
