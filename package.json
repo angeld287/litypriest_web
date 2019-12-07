@@ -8,7 +8,8 @@
     "@testing-library/user-event": "^7.1.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-scripts": "3.3.0"
+    "react-scripts": "3.3.0",
+    "mdbreact": "git+https://oauth2:ezM_KG5EdJ2xpPok5YHF@git.mdbootstrap.com/mdb/react/re-pro.git"
   },
   "scripts": {
     "start": "react-scripts start",

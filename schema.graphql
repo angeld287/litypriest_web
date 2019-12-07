@@ -1,0 +1,59 @@
+type Location 
+    @model 
+    @auth(rules: [
+        { allow: owner },
+        { allow: groups, groups: ["company"], operations: [read] }
+        { allow: groups, groups: ["secretary"], operations: [read] }
+        { allow: groups, groups: ["client"], operations: [read] }
+    
+    ]){
+    id: ID!
+    name: String!
+}
+
+type Contact
+    @model 
+    @auth(rules: [
+        { allow: groups, groups: ["admin"] }
+    ]) {
+    id: ID!
+    name: String
+    phone: String
+}
+
+type Category
+    @model 
+    @auth(rules: [
+        # Defaults to use the "owner" field.
+        { allow: owner },
+        
+        { allow: groups, groups: ["client"], operations: [read] },
+        { allow: groups, groups: ["secretary"], operations: [read] },
+    ]) {
+    id: ID!
+    name: String
+    description: String
+}
+
+type Event
+    @model(subscriptions: null)
+    @auth(rules: [
+        # Defaults to use the "owner" field.
+        { allow: owner },
+        
+        # Authorize the update mutation and both queries. Use `queries: null` to disable auth for queries.
+        { allow: owner, ownerField: "secretary", operations: [update, read] },
+        { allow: owner, ownerField: "priest", operations: [update, read] },
+
+        # Admin users can access any operation.
+        { allow: groups, groups: ["admin"] }
+    ]) {
+    id: ID!
+    nombre: String
+    category: Category @connection
+    date: String
+    description: String
+    location: Location @connection
+    contact: Contact @connection
+    createdAt: String
+}

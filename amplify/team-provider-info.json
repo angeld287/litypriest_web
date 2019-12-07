@@ -1,0 +1,19 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "priest-dev-20191207135423-authRole",
+            "UnauthRoleArn": "arn:aws:iam::846928963573:role/priest-dev-20191207135423-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::846928963573:role/priest-dev-20191207135423-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "priest-dev-20191207135423-deployment",
+            "UnauthRoleName": "priest-dev-20191207135423-unauthRole",
+            "StackName": "priest-dev-20191207135423",
+            "StackId": "arn:aws:cloudformation:us-west-2:846928963573:stack/priest-dev-20191207135423/9b1cee30-191a-11ea-abed-0a79dfa95450"
+        },
+        "categories": {
+            "auth": {
+                "priesteee27237": {}
+            }
+        }
+    }
+}
