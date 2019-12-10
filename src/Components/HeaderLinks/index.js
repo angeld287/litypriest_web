@@ -20,20 +20,8 @@ export default class HeaderLinks extends Component {
 		});
 	};
 
-	componentDidMount() {
-		console.log(this.props.childProps);
-	}
-
 	redirectSignIn = () => {
 		window.location.href = '/signin';
-	};
-
-	redirectModules = () => {
-		window.location.href = '/events';
-	};
-
-	redirectHome = () => {
-		window.location.href = '/';
 	};
 
 	render() {
@@ -54,6 +42,11 @@ export default class HeaderLinks extends Component {
 					{this.props.childProps.state.user_roll === 'priest' && (
 						<MDBNavItem>
 							<MDBNavLink to="/contacts">Contactos</MDBNavLink>
+						</MDBNavItem>
+					)}
+					{this.props.childProps.state.user_roll === 'priest' && (
+						<MDBNavItem>
+							<MDBNavLink to="/categories">Categorias</MDBNavLink>
 						</MDBNavItem>
 					)}
 					<MDBNavItem>
