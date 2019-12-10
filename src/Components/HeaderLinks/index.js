@@ -49,6 +49,11 @@ export default class HeaderLinks extends Component {
 							<MDBNavLink to="/categories">Categorias</MDBNavLink>
 						</MDBNavItem>
 					)}
+					{this.props.childProps.state.user_roll === 'priest' && (
+						<MDBNavItem>
+							<MDBNavLink to="/locations">Ubicaciones</MDBNavLink>
+						</MDBNavItem>
+					)}
 					<MDBNavItem>
 						<MDBDropdown>
 							<MDBDropdownToggle nav caret color="default">

@@ -1,12 +1,12 @@
 import React from 'react';
-import useContacts from './useContacts';
+import useLocations from './useLocations';
 import { MDBContainer, MDBBox, MDBDataTable } from 'mdbreact';
 import Spinner from '../Spinner/Spinner';
 
 import './index.css';
 
-const Events = () => {
-	const { loading, error, contacts } = useContacts();
+const Locations = () => {
+	const { loading, error, locations } = useLocations();
 
 	const data = {
 		columns: [
@@ -16,17 +16,12 @@ const Events = () => {
 				sort: 'asc'
 			},
 			{
-				label: 'Telefono',
-				field: 'phone',
-				sort: 'asc'
-			},
-			{
 				label: 'Opciones',
 				field: 'options',
 				sort: 'disabled'
 			}
 		],
-		rows: contacts
+		rows: locations
 	};
 
 	if (loading) {
@@ -43,7 +38,7 @@ const Events = () => {
 
 	return (
 		<MDBContainer>
-			<h3 className="mt-5">Eventos</h3>
+			<h3 className="mt-5">Ubicaciones</h3>
 			<MDBDataTable
 				striped
 				bordered
@@ -54,7 +49,7 @@ const Events = () => {
 				entries={5}
 				btn={true}
 				data={data}
-				noRecordsFoundLabel="No se han encontrado eventos"
+				noRecordsFoundLabel="No se han encontrado ubicaciones"
 				entriesLabel="Numero de datos"
 				entriesOptions={[ 5, 10 ]}
 				infoLabel={[ 'Mostrando del', 'al', 'de', 'registros' ]}
@@ -65,4 +60,4 @@ const Events = () => {
 	);
 };
 
-export default Events;
+export default Locations;
