@@ -1,12 +1,12 @@
 import React from 'react';
-import useContacts from './useContacts';
+import useEvents from './useEvents';
 import { MDBContainer, MDBBox, MDBDataTable } from 'mdbreact';
 import Spinner from '../Spinner/Spinner';
 
 import './index.css';
 
 const Events = () => {
-	const { loading, error, contacts } = useContacts();
+	const { loading, error, events } = useEvents();
 
 	const data = {
 		columns: [
@@ -16,9 +16,24 @@ const Events = () => {
 				sort: 'asc'
 			},
 			{
-				label: 'Telefono',
-				field: 'phone',
+				label: 'Categoria',
+				field: 'category',
 				sort: 'asc'
+			},
+			{
+				label: 'Fecha',
+				field: 'date',
+				sort: 'disabled'
+			},
+			{
+				label: 'Contacto',
+				field: 'contact',
+				sort: 'disabled'
+			},
+			{
+				label: 'Telefono de Contacto',
+				field: 'contactPhone',
+				sort: 'disabled'
 			},
 			{
 				label: 'Opciones',
@@ -26,7 +41,7 @@ const Events = () => {
 				sort: 'disabled'
 			}
 		],
-		rows: contacts
+		rows: events
 	};
 
 	if (loading) {

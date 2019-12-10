@@ -73,7 +73,7 @@ export const deleteCategory = `mutation DeleteCategory($input: DeleteCategoryInp
 export const createEvent = `mutation CreateEvent($input: CreateEventInput!) {
   createEvent(input: $input) {
     id
-    nombre
+    name
     category {
       id
       name
@@ -97,7 +97,7 @@ export const createEvent = `mutation CreateEvent($input: CreateEventInput!) {
 export const updateEvent = `mutation UpdateEvent($input: UpdateEventInput!) {
   updateEvent(input: $input) {
     id
-    nombre
+    name
     category {
       id
       name
@@ -121,7 +121,7 @@ export const updateEvent = `mutation UpdateEvent($input: UpdateEventInput!) {
 export const deleteEvent = `mutation DeleteEvent($input: DeleteEventInput!) {
   deleteEvent(input: $input) {
     id
-    nombre
+    name
     category {
       id
       name
