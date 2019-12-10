@@ -1,5 +1,6 @@
 import React from 'react';
 import useContacts from './useContacts';
+import { Link } from 'react-router-dom';
 import { MDBContainer, MDBBox, MDBDataTable } from 'mdbreact';
 import Spinner from '../Spinner/Spinner';
 
@@ -44,6 +45,9 @@ const Contacts = () => {
 	return (
 		<MDBContainer>
 			<h3 className="mt-5">Contactos</h3>
+			<Link to={`contacts/new`} className="btn btn-primary btn-sm">
+				Nuevo Contacto
+			</Link>
 			<MDBDataTable
 				striped
 				bordered
@@ -51,7 +55,6 @@ const Contacts = () => {
 				responsiveSm={true}
 				small
 				hover
-				entries={5}
 				btn={true}
 				data={data}
 				noRecordsFoundLabel="No se han encontrado contactos"
