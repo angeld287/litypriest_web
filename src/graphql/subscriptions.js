@@ -73,7 +73,7 @@ export const onDeleteCategory = `subscription OnDeleteCategory {
 export const onCreateEvent = `subscription OnCreateEvent {
   onCreateEvent {
     id
-    nombre
+    name
     category {
       id
       name
@@ -97,7 +97,7 @@ export const onCreateEvent = `subscription OnCreateEvent {
 export const onUpdateEvent = `subscription OnUpdateEvent {
   onUpdateEvent {
     id
-    nombre
+    name
     category {
       id
       name
@@ -121,7 +121,7 @@ export const onUpdateEvent = `subscription OnUpdateEvent {
 export const onDeleteEvent = `subscription OnDeleteEvent {
   onDeleteEvent {
     id
-    nombre
+    name
     category {
       id
       name

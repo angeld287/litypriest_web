@@ -71,7 +71,7 @@ export const listCategorys = `query ListCategorys(
 export const getEvent = `query GetEvent($id: ID!) {
   getEvent(id: $id) {
     id
-    nombre
+    name
     category {
       id
       name
@@ -100,7 +100,7 @@ export const listEvents = `query ListEvents(
   listEvents(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      nombre
+      name
       category {
         id
         name

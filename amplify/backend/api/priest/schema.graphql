@@ -51,7 +51,7 @@ type Event
         { allow: groups, groups: ["admin"] }
     ]) {
     id: ID!
-    nombre: String
+    name: String
     category: Category @connection
     date: String
     description: String
