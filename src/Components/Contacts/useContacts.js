@@ -1,8 +1,6 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listContacts } from './../../graphql/queries';
-import { MDBBtn } from 'mdbreact';
 import Swal from 'sweetalert2';
 import { deleteContact } from '../../graphql/mutations';
 
@@ -11,43 +9,31 @@ const useContacts = () => {
 	const [ loading, setLoading ] = useState(true);
 	const [ error, setError ] = useState(false);
 
-	useEffect(
-		() => {
-			const fetchContacts = async () => {
-				var contactsApi = [];
+	useEffect(() => {
+		let didCancel = false;
 
-				try {
-					contactsApi = await API.graphql(graphqlOperation(listContacts));
-				} catch (error) {
-					setLoading(false);
-					setError(true);
-				}
+		const fetchContacts = async () => {
+			var contactsApi = [];
 
-				var formatedContacts = [];
-				contactsApi.data.listContacts.items.forEach((contact) => {
-					formatedContacts.push({
-						name: contact.name,
-						phone: contact.phone,
-						options: (
-							<Fragment>
-								<Link to={`contacts/${contact.id}/edit`} className="btn btn-success btn-sm">
-									Editar
-								</Link>
-								<MDBBtn color="red" size="sm" onClick={() => handleDeleteContact(contact.id)}>
-									Borrar
-								</MDBBtn>
-							</Fragment>
-						)
-					});
-				});
-				setContacts(formatedContacts);
+			try {
+				contactsApi = await API.graphql(graphqlOperation(listContacts));
+			} catch (error) {
 				setLoading(false);
-			};
+				setError(true);
+			}
 
-			fetchContacts();
-		},
-		[ contacts ]
-	);
+			if (!didCancel) {
+				setContacts(contactsApi.data.listContacts.items);
+				setLoading(false);
+			}
+		};
+
+		fetchContacts();
+
+		return () => {
+			didCancel = true;
+		};
+	}, []);
 
 	const handleDeleteContact = async (id) => {
 		const result = await Swal.fire({
@@ -68,13 +54,14 @@ const useContacts = () => {
 			try {
 				await API.graphql(graphqlOperation(deleteContact, { input }));
 				Swal.fire('Eliminado correctamente!', '', 'success');
+				setContacts(contacts.filter((contact) => contact.id !== id));
 			} catch (error) {
 				Swal.fire('Error', 'Intentelo nuevamente', 'error');
 			}
 		}
 	};
 
-	return { contacts, error, loading };
+	return { contacts, error, loading, handleDeleteContact };
 };
 
 export default useContacts;

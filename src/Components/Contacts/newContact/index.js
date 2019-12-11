@@ -1,25 +1,9 @@
 import React from 'react';
-import useForm from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
-import { API, graphqlOperation } from 'aws-amplify';
-import { createContact } from '../../../graphql/mutations';
-import Swal from 'sweetalert2';
-
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn, MDBCard, MDBCardBody, MDBIcon } from 'mdbreact';
+import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBCard, MDBCardBody } from 'mdbreact';
+import useNewContact from './useNewContact';
 
 const NewContact = () => {
-	const { register, handleSubmit, watch, errors } = useForm();
-	let history = useHistory();
-
-	const onSubmit = async (input) => {
-		try {
-			await API.graphql(graphqlOperation(createContact, { input }));
-			await Swal.fire('Correcto', 'El usuario se ha creado correctamente', 'success');
-			history.push('/contacts');
-		} catch (error) {
-			Swal.fire('Ha ocurrido un error', 'Intentelo de nuevo mas tarde', 'error');
-		}
-	};
+	const { onSubmit, register, handleSubmit, errors, formState } = useNewContact();
 
 	return (
 		<MDBContainer>
@@ -37,9 +21,9 @@ const NewContact = () => {
 									name="name"
 									autoComplete="off"
 									className="form-control"
-									ref={register({ required: true })}
+									ref={register({ required: { message: 'Este campo es requerido', value: true } })}
 								/>
-								{errors.name && <span className="text-danger mb-2">Este campo es requerido</span>}
+								{errors.name && <span className="text-danger mb-2">{errors.name.message}</span>}
 
 								<br />
 
@@ -50,12 +34,19 @@ const NewContact = () => {
 									name="phone"
 									autoComplete="off"
 									className="form-control"
-									ref={register({ required: true })}
+									ref={register({
+										required: { message: 'Este campo es requerido', value: true },
+										pattern: { value: /^[0-9]+$/i, message: 'Este campo solo acepta números' }
+									})}
 								/>
-								{errors.phone && <span className="text-danger mb-2">Este campo es requerido</span>}
+								{errors.phone && <span className="text-danger mb-2">{errors.phone.message}</span>}
 
 								<div className="text-center py-4 mt-3">
-									<MDBBtn className="btn btn-outline-blue" type="submit">
+									<MDBBtn
+										className="btn btn-outline-blue"
+										type="submit"
+										disabled={formState.isSubmitting}
+									>
 										Agregar
 									</MDBBtn>
 								</div>
