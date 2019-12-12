@@ -25,7 +25,8 @@ export default class HeaderLinks extends Component {
 	};
 
 	render() {
-		const username = this.props.childProps.state.username != '' ? this.props.childProps.state.username : 'Ingresar';
+		const username =
+			this.props.childProps.state.username !== '' ? this.props.childProps.state.username : 'Ingresar';
 
 		return (
 			<MDBContainer>
