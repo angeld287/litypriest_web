@@ -1,27 +1,48 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import useLocations from './useLocations';
-import { MDBContainer, MDBBox, MDBDataTable } from 'mdbreact';
+import { Link } from 'react-router-dom';
+import { MDBContainer, MDBBox, MDBDataTable, MDBBtn } from 'mdbreact';
 import Spinner from '../Spinner/Spinner';
 
 import './index.css';
 
 const Locations = () => {
-	const { loading, error, locations } = useLocations();
+	const { loading, error, locations, handleDeleteLocation } = useLocations();
 
-	const data = {
-		columns: [
-			{
-				label: 'Nombre',
-				field: 'name',
-				sort: 'asc'
-			},
-			{
-				label: 'Opciones',
-				field: 'options',
-				sort: 'disabled'
-			}
-		],
-		rows: locations
+	const data = () => {
+		var formatedLocations = [];
+			locations.forEach((location) => {
+				formatedLocations.push({
+					name: location.name,
+					options: (
+						<Fragment>
+							<Link to={`locations/${location.id}/edit`} className="btn btn-success btn-sm">
+								Editar
+							</Link>
+							<MDBBtn color="red" size="sm" onClick={() => handleDeleteLocation(location.id)}>
+								Borrar
+							</MDBBtn>
+						</Fragment>
+					)
+				});
+			});
+
+		return{
+			columns: [
+				{
+					label: 'Nombre',
+					field: 'name',
+					sort: 'asc'
+				},
+				{
+					label: 'Opciones',
+					field: 'options',
+					sort: 'disabled'
+				}
+			],
+			rows: formatedLocations
+		};
+
 	};
 
 	if (loading) {
@@ -39,6 +60,9 @@ const Locations = () => {
 	return (
 		<MDBContainer>
 			<h3 className="mt-5">Ubicaciones</h3>
+			<Link to={`locations/new`} className="btn btn-primary btn-sm">
+				Nueva Ubicacion
+			</Link>
 			<MDBDataTable
 				striped
 				bordered
@@ -48,7 +72,7 @@ const Locations = () => {
 				hover
 				entries={5}
 				btn={true}
-				data={data}
+				data={data()}
 				noRecordsFoundLabel="No se han encontrado ubicaciones"
 				entriesLabel="Numero de datos"
 				entriesOptions={[ 5, 10 ]}
