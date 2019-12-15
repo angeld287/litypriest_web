@@ -6,9 +6,11 @@ import Home from './../Home';
 import AuthComponent from './../Authentication/AuthComponent';
 import Events from '../Events/';
 import Contacts from '../Contacts';
-import Categories from '../Categories';
 import NewContact from '../Contacts/newContact';
 import EditContact from '../Contacts/editContact';
+import Categories from '../Categories';
+import NewCategory from '../Categories/newCategory';
+import EditCategory from '../Categories/editCategory';
 import Locations from '../Locations'
 
 export const Routes = ({ childProps }) => (
@@ -18,6 +20,8 @@ export const Routes = ({ childProps }) => (
 		<ProtectedRoutePriest exact path="/contacts/new" render={NewContact} props={childProps} />
 		<ProtectedRoutePriest exact path="/contacts/:id/edit" render={EditContact} props={childProps} />
 		<ProtectedRoutePriest exact path="/contacts" render={Contacts} props={childProps} />
+		<ProtectedRoutePriest exact path="/categories/new" render={NewCategory} props={childProps} />
+		<ProtectedRoutePriest exact path="/categories/:id/edit" render={EditCategory} props={childProps} />
 		<ProtectedRoutePriest exact path="/categories" render={Categories} props={childProps} />
 		<ProtectedRoutePriest exact path="/locations" render={Locations} props={childProps} />
 		<ProppedRoute exact path="/signin" render={AuthComponent} props={childProps} />

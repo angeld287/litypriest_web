@@ -1,33 +1,54 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import useCategories from './useCategories';
-import { MDBContainer, MDBBox, MDBDataTable } from 'mdbreact';
+import { Link } from 'react-router-dom';
+import { MDBContainer, MDBBox, MDBDataTable, MDBBtn } from 'mdbreact';
 import Spinner from '../Spinner/Spinner';
 
 import './index.css';
 
 const Categories = () => {
-	const { loading, error, categories } = useCategories();
+	const { loading, error, categories, handleDeleteCategory } = useCategories();
 
-	const data = {
-		columns: [
-			{
-				label: 'Nombre',
-				field: 'name',
-				sort: 'asc'
-			},
-			{
-				label: 'Descripcion',
-				field: 'description',
-				sort: 'asc'
-			},
-			{
-				label: 'Opciones',
-				field: 'options',
-				sort: 'disabled'
-			}
-		],
-		rows: categories
-	};
+	const data = () => {
+		var formatedCategories = [];
+		categories.forEach((category) => {
+			formatedCategories.push({
+				name: category.name,
+				description: category.description,
+				options: (
+					<Fragment>
+						<Link to={`categories/${category.id}/edit`} className="btn btn-success btn-sm">
+							Editar
+						</Link>
+						<MDBBtn color="red" size="sm" onClick={() => handleDeleteCategory(category.id)}>
+							Borrar
+						</MDBBtn>
+					</Fragment>
+				)
+			});
+		});
+
+		return {
+			columns: [
+				{
+					label: 'Nombre',
+					field: 'name',
+					sort: 'asc'
+				},
+				{
+					label: 'Descripcion',
+					field: 'description',
+					sort: 'asc'
+				},
+				{
+					label: 'Opciones',
+					field: 'options',
+					sort: 'disabled'
+				}
+			],
+			rows: formatedCategories
+		};
+	}
 
 	if (loading) {
 		return (
@@ -44,6 +65,9 @@ const Categories = () => {
 	return (
 		<MDBContainer>
 			<h3 className="mt-5">categorias</h3>
+			<Link to={`categories/new`} className="btn btn-primary btn-sm">
+				Nueva Categoria
+			</Link>
 			<MDBDataTable
 				striped
 				bordered
@@ -53,7 +77,7 @@ const Categories = () => {
 				hover
 				entries={5}
 				btn={true}
-				data={data}
+				data={data()}
 				noRecordsFoundLabel="No se han encontrado categorias"
 				entriesLabel="Numero de datos"
 				entriesOptions={[ 5, 10 ]}
