@@ -1,8 +1,8 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listLocations } from './../../graphql/queries';
-import { MDBBtn } from 'mdbreact';
+import Swal from 'sweetalert2';
+import { deleteLocation } from '../../graphql/mutations';
 
 const useLocations = () => {
 	const [ locations, setLocations ] = useState([]);
@@ -10,6 +10,8 @@ const useLocations = () => {
 	const [ error, setError ] = useState(false);
 
 	useEffect(() => {
+		let didCancel = false;
+
 		const fetchLocations = async () => {
 			var locationsApi = [];
 
@@ -20,30 +22,46 @@ const useLocations = () => {
 				setError(true);
 			}
 
-			var formatedLocations = [];
-			locationsApi.data.listLocations.items.forEach((location) => {
-				formatedLocations.push({
-					name: location.name,
-					options: (
-						<Fragment>
-							<Link to={`locations/${location.id}/edit`} className="btn btn-success btn-sm">
-								Editar
-							</Link>
-							<MDBBtn color="red" size="sm">
-								Borrar
-							</MDBBtn>
-						</Fragment>
-					)
-				});
-			});
-			setLocations(formatedLocations);
-			setLoading(false);
+			if (!didCancel) {
+				setLocations(locationsApi.data.listLocations.items);
+				setLoading(false);
+			}
 		};
 
 		fetchLocations();
+
+		return () => {
+			didCancel = true;
+		};
 	}, []);
 
-	return { locations, error, loading };
+	const handleDeleteLocation = async (id) => {
+		const result = await Swal.fire({
+			title: '¿Desea eliminar la ubicacion?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Eliminar',
+			cancelButtonText: 'Cancelar'
+		});
+
+		var input = {
+			id
+		};
+
+		if (result.value) {
+			try {
+				await API.graphql(graphqlOperation(deleteLocation, { input }));
+				Swal.fire('Eliminado correctamente!', '', 'success');
+				setLocations(locations.filter((location) => location.id !== id));
+			} catch (error) {
+				Swal.fire('Error', 'Intentelo nuevamente', 'error');
+			}
+		}
+	};
+
+	return { locations, error, loading, handleDeleteLocation };
 };
 
 export default useLocations;

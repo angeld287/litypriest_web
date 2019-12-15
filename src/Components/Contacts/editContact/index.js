@@ -23,7 +23,7 @@ const EditContact = () => {
 					<MDBCard>
 						<MDBCardBody>
 							<form onSubmit={handleSubmit(onSubmit)}>
-								<p className="h4 text-center py-4">Nuevo Contacto</p>
+								<p className="h4 text-center py-4">Editar Contacto</p>
 
 								<label htmlFor="name" className="grey-text font-weight-light">
 									Nombre del contacto:

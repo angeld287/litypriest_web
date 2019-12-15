@@ -12,6 +12,8 @@ import Categories from '../Categories';
 import NewCategory from '../Categories/newCategory';
 import EditCategory from '../Categories/editCategory';
 import Locations from '../Locations'
+import NewLocation from '../Locations/newLocation';
+import EditLocation from '../Locations/editLocation';
 
 export const Routes = ({ childProps }) => (
 	<Switch>
@@ -23,6 +25,8 @@ export const Routes = ({ childProps }) => (
 		<ProtectedRoutePriest exact path="/categories/new" render={NewCategory} props={childProps} />
 		<ProtectedRoutePriest exact path="/categories/:id/edit" render={EditCategory} props={childProps} />
 		<ProtectedRoutePriest exact path="/categories" render={Categories} props={childProps} />
+		<ProtectedRoutePriest exact path="/locations/new" render={NewLocation} props={childProps} />
+		<ProtectedRoutePriest exact path="/locations/:id/edit" render={EditLocation} props={childProps} />
 		<ProtectedRoutePriest exact path="/locations" render={Locations} props={childProps} />
 		<ProppedRoute exact path="/signin" render={AuthComponent} props={childProps} />
 	</Switch>
