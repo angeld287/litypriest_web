@@ -5,6 +5,12 @@ export const createLocation = `mutation CreateLocation($input: CreateLocationInp
   createLocation(input: $input) {
     id
     name
+    events {
+      items {
+        id
+      }
+      nextToken
+    }
   }
 }
 `;
@@ -12,6 +18,12 @@ export const updateLocation = `mutation UpdateLocation($input: UpdateLocationInp
   updateLocation(input: $input) {
     id
     name
+    events {
+      items {
+        id
+      }
+      nextToken
+    }
   }
 }
 `;
@@ -19,6 +31,12 @@ export const deleteLocation = `mutation DeleteLocation($input: DeleteLocationInp
   deleteLocation(input: $input) {
     id
     name
+    events {
+      items {
+        id
+      }
+      nextToken
+    }
   }
 }
 `;
@@ -27,6 +45,12 @@ export const createContact = `mutation CreateContact($input: CreateContactInput!
     id
     name
     phone
+    events {
+      items {
+        id
+      }
+      nextToken
+    }
   }
 }
 `;
@@ -35,6 +59,12 @@ export const updateContact = `mutation UpdateContact($input: UpdateContactInput!
     id
     name
     phone
+    events {
+      items {
+        id
+      }
+      nextToken
+    }
   }
 }
 `;
@@ -43,6 +73,12 @@ export const deleteContact = `mutation DeleteContact($input: DeleteContactInput!
     id
     name
     phone
+    events {
+      items {
+        id
+      }
+      nextToken
+    }
   }
 }
 `;
@@ -82,14 +118,19 @@ export const createEvent = `mutation CreateEvent($input: CreateEventInput!) {
     date
     description
     location {
-      id
-      name
+      items {
+        id
+      }
+      nextToken
     }
-    contact {
-      id
-      name
-      phone
+    contacts {
+      items {
+        id
+      }
+      nextToken
     }
+    secretary
+    priest
     createdAt
   }
 }
@@ -106,14 +147,19 @@ export const updateEvent = `mutation UpdateEvent($input: UpdateEventInput!) {
     date
     description
     location {
-      id
-      name
+      items {
+        id
+      }
+      nextToken
     }
-    contact {
-      id
-      name
-      phone
+    contacts {
+      items {
+        id
+      }
+      nextToken
     }
+    secretary
+    priest
     createdAt
   }
 }
@@ -130,15 +176,221 @@ export const deleteEvent = `mutation DeleteEvent($input: DeleteEventInput!) {
     date
     description
     location {
+      items {
+        id
+      }
+      nextToken
+    }
+    contacts {
+      items {
+        id
+      }
+      nextToken
+    }
+    secretary
+    priest
+    createdAt
+  }
+}
+`;
+export const createEventContacts = `mutation CreateEventContacts($input: CreateEventContactsInput!) {
+  createEventContacts(input: $input) {
+    id
+    event {
       id
       name
+      category {
+        id
+        name
+        description
+      }
+      date
+      description
+      location {
+        nextToken
+      }
+      contacts {
+        nextToken
+      }
+      secretary
+      priest
+      createdAt
     }
     contact {
       id
       name
       phone
+      events {
+        nextToken
+      }
     }
-    createdAt
+  }
+}
+`;
+export const updateEventContacts = `mutation UpdateEventContacts($input: UpdateEventContactsInput!) {
+  updateEventContacts(input: $input) {
+    id
+    event {
+      id
+      name
+      category {
+        id
+        name
+        description
+      }
+      date
+      description
+      location {
+        nextToken
+      }
+      contacts {
+        nextToken
+      }
+      secretary
+      priest
+      createdAt
+    }
+    contact {
+      id
+      name
+      phone
+      events {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const deleteEventContacts = `mutation DeleteEventContacts($input: DeleteEventContactsInput!) {
+  deleteEventContacts(input: $input) {
+    id
+    event {
+      id
+      name
+      category {
+        id
+        name
+        description
+      }
+      date
+      description
+      location {
+        nextToken
+      }
+      contacts {
+        nextToken
+      }
+      secretary
+      priest
+      createdAt
+    }
+    contact {
+      id
+      name
+      phone
+      events {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const createEventLocations = `mutation CreateEventLocations($input: CreateEventLocationsInput!) {
+  createEventLocations(input: $input) {
+    id
+    event {
+      id
+      name
+      category {
+        id
+        name
+        description
+      }
+      date
+      description
+      location {
+        nextToken
+      }
+      contacts {
+        nextToken
+      }
+      secretary
+      priest
+      createdAt
+    }
+    location {
+      id
+      name
+      events {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const updateEventLocations = `mutation UpdateEventLocations($input: UpdateEventLocationsInput!) {
+  updateEventLocations(input: $input) {
+    id
+    event {
+      id
+      name
+      category {
+        id
+        name
+        description
+      }
+      date
+      description
+      location {
+        nextToken
+      }
+      contacts {
+        nextToken
+      }
+      secretary
+      priest
+      createdAt
+    }
+    location {
+      id
+      name
+      events {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const deleteEventLocations = `mutation DeleteEventLocations($input: DeleteEventLocationsInput!) {
+  deleteEventLocations(input: $input) {
+    id
+    event {
+      id
+      name
+      category {
+        id
+        name
+        description
+      }
+      date
+      description
+      location {
+        nextToken
+      }
+      contacts {
+        nextToken
+      }
+      secretary
+      priest
+      createdAt
+    }
+    location {
+      id
+      name
+      events {
+        nextToken
+      }
+    }
   }
 }
 `;
