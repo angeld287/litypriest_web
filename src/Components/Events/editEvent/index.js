@@ -26,15 +26,15 @@ const EditEvent = () => {
 	const locationname = (event.event.location.items[0] === undefined)?("Seleccione una opcion"):(event.event.location.items[0].location.name);
 	const locationid = (event.event.location.items[0] === undefined)?("0"):(event.event.location.items[0].location.id);
 
-	let categories = event.categories.filter(c => c.id != categoryid).map((category, i) => {
+	let categories = event.categories.filter(c => c.id !== categoryid).map((category, i) => {
       return (<option key={i} value={category.id}>{category.name}</option>)
     });
 
-	let locations = event.locations.filter(l => l.id != locationid).map((location, i) => {
+	let locations = event.locations.filter(l => l.id !== locationid).map((location, i) => {
       return (<option key={i} value={location.id}>{location.name}</option>)
     });
 
-	let contacts = event.contacts.filter(c => c.id != contactid).map((contact, i) => {
+	let contacts = event.contacts.filter(c => c.id !== contactid).map((contact, i) => {
       return (<option key={i} value={contact.id}>{contact.name}</option>)
     });
 
