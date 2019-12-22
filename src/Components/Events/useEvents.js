@@ -1,8 +1,8 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
-import { listEvents } from './../../graphql/queries';
-import { MDBBtn } from 'mdbreact';
+import { listEvents } from './../../graphql/custom-queries';
+import Swal from 'sweetalert2';
+import { deleteEvent } from '../../graphql/mutations';
 
 const useEvents = () => {
 	const [ events, setEvents ] = useState([]);
@@ -10,6 +10,8 @@ const useEvents = () => {
 	const [ error, setError ] = useState(false);
 
 	useEffect(() => {
+		let didCancel = false;
+
 		const fetchEvents = async () => {
 			var eventsApi = [];
 
@@ -20,34 +22,47 @@ const useEvents = () => {
 				setError(true);
 			}
 
-			var formatedEvents = [];
-			eventsApi.data.listEvents.items.forEach((event) => {
-				formatedEvents.push({
-					name: event.name,
-					category: event.category.name,
-					date: event.date,
-					contact: event.contact.name,
-					contactPhone: event.contact.phone,
-					options: (
-						<Fragment>
-							<Link to={`events/${event.id}/edit`} className="btn btn-success btn-sm">
-								Editar
-							</Link>
-							<MDBBtn color="red" size="sm">
-								Borrar
-							</MDBBtn>
-						</Fragment>
-					)
-				});
-			});
-			setEvents(formatedEvents);
-			setLoading(false);
+			if (!didCancel) {
+				setEvents(eventsApi.data.listEvents.items);
+				setLoading(false);
+			}
 		};
 
 		fetchEvents();
+
+		return () => {
+			didCancel = true;
+		};
 	}, []);
 
-	return { events, error, loading };
+
+	const handleDeleteEvent = async (id) => {
+		const result = await Swal.fire({
+			title: '¿Desea eliminar el evento?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Eliminar',
+			cancelButtonText: 'Cancelar'
+		});
+
+		var input = {
+			id
+		};
+
+		if (result.value) {
+			try {
+				await API.graphql(graphqlOperation(deleteEvent, { input }));
+				Swal.fire('Eliminado correctamente!', '', 'success');
+				setEvents(events.filter((event) => event.id !== id));
+			} catch (error) {
+				Swal.fire('Error', 'Intentelo nuevamente', 'error');
+			}
+		}
+	};
+
+	return { events, error, loading, handleDeleteEvent };
 };
 
 export default useEvents;

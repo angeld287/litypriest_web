@@ -5,6 +5,8 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import Home from './../Home';
 import AuthComponent from './../Authentication/AuthComponent';
 import Events from '../Events/';
+import NewEvent from '../Events/newEvent';
+import EditEvent from '../Events/editEvent';
 import Contacts from '../Contacts';
 import NewContact from '../Contacts/newContact';
 import EditContact from '../Contacts/editContact';
@@ -18,6 +20,8 @@ import EditLocation from '../Locations/editLocation';
 export const Routes = ({ childProps }) => (
 	<Switch>
 		<Route exact path="/" render={() => <Home />} />
+		<ProtectedRoutePriest exact path="/events/new" render={NewEvent} props={childProps} />
+		<ProtectedRoutePriest exact path="/events/:id/edit" render={EditEvent} props={childProps} />
 		<ProtectedRoutePriest exact path="/events" render={Events} props={childProps} />
 		<ProtectedRoutePriest exact path="/contacts/new" render={NewContact} props={childProps} />
 		<ProtectedRoutePriest exact path="/contacts/:id/edit" render={EditContact} props={childProps} />

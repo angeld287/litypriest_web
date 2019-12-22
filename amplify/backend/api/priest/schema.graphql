@@ -9,6 +9,7 @@ type Location
     ]){
     id: ID!
     name: String!
+    events: [EventLocations] @connection(name: "locationk")
 }
 
 type Contact
@@ -21,6 +22,7 @@ type Contact
     id: ID!
     name: String
     phone: String
+    events: [EventContacts] @connection(name: "contactk")
 }
 
 type Category
@@ -55,7 +57,21 @@ type Event
     category: Category @connection
     date: String
     description: String
-    location: Location @connection
-    contact: Contact @connection
+    location: [EventLocations] @connection(name: "eventl")
+    contacts: [EventContacts] @connection(name: "eventc")
+    secretary: String
+    priest: String
     createdAt: String
+}
+
+type EventContacts @model(queries: null) {
+  id: ID!
+  event: Event @connection(name: "eventc")
+  contact: Contact @connection(name: "contactk")
+}
+
+type EventLocations @model(queries: null) {
+  id: ID!
+  event: Event @connection(name: "eventl")
+  location: Location @connection(name: "locationk")
 }
