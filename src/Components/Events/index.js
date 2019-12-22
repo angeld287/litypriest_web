@@ -21,6 +21,9 @@ const Events = () => {
 					contactPhone: (event.contacts.items[0] === undefined) ? ("no ubication") : (event.contacts.items[0].contact.phone),
 					options: (
 						<Fragment>
+							<Link to={`events/${event.id}/details`} className="btn btn-info btn-sm" style={{marginRight:10}}>
+								Detalle
+							</Link>
 							<Link to={`events/${event.id}/edit`} className="btn btn-success btn-sm">
 								Editar
 							</Link>

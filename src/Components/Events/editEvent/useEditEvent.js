@@ -58,7 +58,7 @@ const useEditEvent = () => {
 			description: input.description
 		}
 
-		if(input.date != ""){
+		if(input.date !== ""){
 			inputEvent.date = input.date
 		}
 
@@ -77,11 +77,11 @@ const useEditEvent = () => {
 		}
 		try {
 			await API.graphql(graphqlOperation(updateEvent, {input: inputEvent} ));
-			if((inputEventContact.eventContactsContactId != contactid) && (inputEventContact.eventContactsContactId != "0")) {
+			if((inputEventContact.eventContactsContactId !== contactid) && (inputEventContact.eventContactsContactId !== "0")) {
 				await API.graphql(graphqlOperation(createEventContacts, {input: inputEventContact} ));
 			}
 			
-			if((inputEventLocation.eventLocationsLocationId != locationid) && (inputEventLocation.eventLocationsLocationId != "0")) {
+			if((inputEventLocation.eventLocationsLocationId !== locationid) && (inputEventLocation.eventLocationsLocationId !== "0")) {
 				await API.graphql(graphqlOperation(createEventLocations, {input: inputEventLocation} ));
 			}
 

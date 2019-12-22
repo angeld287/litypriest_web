@@ -51,7 +51,7 @@ const useNewEvent = () => {
 				description: input.description
 			}
 
-			if(input.date != ""){
+			if(input.date !== ""){
 				inputEvent.date = input.date
 			}
 
@@ -66,8 +66,8 @@ const useNewEvent = () => {
 				eventLocationsLocationId: input.eventLocationId
 			}
 
-			if(inputEventContact.eventContactsContactId != "0"){ await API.graphql(graphqlOperation(createEventContacts, {input: inputEventContact} )); }
-			if(inputEventLocation.eventLocationsLocationId != "0"){ await API.graphql(graphqlOperation(createEventLocations, {input: inputEventLocation} )); }
+			if(inputEventContact.eventContactsContactId !== "0"){ await API.graphql(graphqlOperation(createEventContacts, {input: inputEventContact} )); }
+			if(inputEventLocation.eventLocationsLocationId !== "0"){ await API.graphql(graphqlOperation(createEventLocations, {input: inputEventLocation} )); }
 			
 			await Swal.fire('Correcto', 'El evento se ha creado correctamente', 'success');
 			history.push('/events');

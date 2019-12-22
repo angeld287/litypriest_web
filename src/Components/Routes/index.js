@@ -7,6 +7,7 @@ import AuthComponent from './../Authentication/AuthComponent';
 import Events from '../Events/';
 import NewEvent from '../Events/newEvent';
 import EditEvent from '../Events/editEvent';
+import DetailsEvent from '../Events/detailsEvent';
 import Contacts from '../Contacts';
 import NewContact from '../Contacts/newContact';
 import EditContact from '../Contacts/editContact';
@@ -20,6 +21,7 @@ import EditLocation from '../Locations/editLocation';
 export const Routes = ({ childProps }) => (
 	<Switch>
 		<Route exact path="/" render={() => <Home />} />
+		<ProtectedRoutePriest exact path="/events/:id/details" render={DetailsEvent} props={childProps} />
 		<ProtectedRoutePriest exact path="/events/new" render={NewEvent} props={childProps} />
 		<ProtectedRoutePriest exact path="/events/:id/edit" render={EditEvent} props={childProps} />
 		<ProtectedRoutePriest exact path="/events" render={Events} props={childProps} />
