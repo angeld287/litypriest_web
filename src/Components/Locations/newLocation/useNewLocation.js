@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import useForm from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { API, graphqlOperation } from 'aws-amplify';
@@ -6,11 +7,12 @@ import Swal from 'sweetalert2';
 
 const useNewLocation = () => {
 	const { register, handleSubmit, errors, formState } = useForm();
+	const [ location, setLocation ] = useState("");
 	let history = useHistory();
 
 	const onSubmit = async (input) => {
 		try {
-			await API.graphql(graphqlOperation(createLocation, { input }));
+			await API.graphql(graphqlOperation(createLocation, { input : { name: location} }));
 			await Swal.fire('Correcto', 'La ubicacion se ha creado correctamente', 'success');
 			history.push('/locations');
 		} catch (error) {
@@ -18,7 +20,7 @@ const useNewLocation = () => {
 		}
 	};
 
-	return { onSubmit, register, handleSubmit, errors, formState };
+	return { onSubmit, register, handleSubmit, errors, formState, setLocation, location };
 };
 
 export default useNewLocation;
