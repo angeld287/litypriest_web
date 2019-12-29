@@ -18,6 +18,8 @@ import Locations from '../Locations'
 import NewLocation from '../Locations/newLocation';
 import EditLocation from '../Locations/editLocation';
 
+import EventsCalendar from '../CalendarView';
+
 export const Routes = ({ childProps }) => (
 	<Switch>
 		<Route exact path="/" render={() => <Home />} />
@@ -34,6 +36,7 @@ export const Routes = ({ childProps }) => (
 		<ProtectedRoutePriest exact path="/locations/new" render={NewLocation} props={childProps} />
 		<ProtectedRoutePriest exact path="/locations/:id/edit" render={EditLocation} props={childProps} />
 		<ProtectedRoutePriest exact path="/locations" render={Locations} props={childProps} />
+		<ProtectedRoutePriest exact path="/calendar" render={EventsCalendar} props={childProps} />
 		<ProppedRoute exact path="/signin" render={AuthComponent} props={childProps} />
 	</Switch>
 );
