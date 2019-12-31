@@ -15,6 +15,7 @@ type Location
 type Contact
     @model 
     @auth(rules: [
+        { allow: owner },
         { allow: groups, groups: ["admin"] }
         { allow: groups, groups: ["priest"], operations: [read] },
         { allow: groups, groups: ["secretary"], operations: [read] },
