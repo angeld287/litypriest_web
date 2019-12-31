@@ -57,7 +57,7 @@ const DetailsEvent = () => {
 						/>
 					</div>
 					<MDBCardBody>
-						<MDBCardTitle className="h3">{event.name}</MDBCardTitle>
+						<MDBCardTitle className="h3">{event.date} | {event.name}</MDBCardTitle>
 						<MDBCardText>
 							{event.description}
 						</MDBCardText>
