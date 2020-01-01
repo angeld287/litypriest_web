@@ -114,7 +114,7 @@ const NewEvent = () => {
 									getOptionLabel={option => option.name}
 									onChange={(event, newValue) => {setEventLocationId(newValue != null ? newValue.id : "")}}
 									renderInput={params => (
-										<TextField {...params} label="Lugar de Evento" variant="outlined" fullWidth/>
+										<TextField {...params} label="Lugar de Evento" variant="outlined" required fullWidth/>
 									)}
 								/>
 								{errors.eventLocationId && <span className="text-danger mb-2">{errors.eventLocationId.message}</span>}

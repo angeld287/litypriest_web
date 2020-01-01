@@ -13,6 +13,7 @@ const useEditEvent = () => {
 	const [ event, setEvent ] = useState({});
 	const [ error, setError ] = useState(false);
 	const { register, handleSubmit, errors, setValue } = useForm();
+	const [ eventLocationId, setEventLocationId ] = useState('');
 
 	useEffect(
 		() => {
@@ -54,13 +55,27 @@ const useEditEvent = () => {
 		const inputEvent = {
 			id: id,
 			name: input.name,
-			eventCategoryId: input.eventCategoryId,
 			description: input.description,
-			eventLocationId: input.eventLocationId
 		}
 
 		if(input.date !== ""){
 			inputEvent.date = input.date
+		}
+
+		if(input.eventCategoryId !== "0"){
+			inputEvent.eventCategoryId = input.eventCategoryId
+		}else{
+			Swal.fire('Campo Obligatorio', 'Favor completar el campo Tipo de Evento', 'error');
+			return;
+		}
+
+		if(input.eventContactId == "0"){
+			Swal.fire('Campo Obligatorio', 'Favor completar el campo Contacto', 'error');
+			return;
+		}
+
+		if(eventLocationId !== ""){
+			inputEvent.eventLocationId = eventLocationId
 		}
 
 		const event = await API.graphql(graphqlOperation(getEvent, { id }));
@@ -86,7 +101,7 @@ const useEditEvent = () => {
 		}
 	};
 
-	return { onSubmit, event, register, handleSubmit, setValue, errors, error };
+	return { onSubmit, event, register, handleSubmit, setValue, errors, error, setEventLocationId };
 };
 
 export default useEditEvent;

@@ -3,9 +3,11 @@ import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBCard, MDBCardBody } from 'mdbr
 import Spinner from '../../Spinner/Spinner';
 import useEditEvent from './useEditEvent';
 
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const EditEvent = () => {
-	const { onSubmit, event, register, handleSubmit, errors, error, setValue } = useEditEvent();
+	const { onSubmit, event, register, handleSubmit, errors, error, setValue, setEventLocationId } = useEditEvent();
 	
 	if (Object.entries(event).length === 0 && event.constructor === Object) return <Spinner />;
 
@@ -121,13 +123,16 @@ const EditEvent = () => {
 								<label htmlFor="eventLocationId" className="grey-text font-weight-light">
 									Lugar de Evento:
 								</label>
-								<select name="eventLocationId" className="browser-default custom-select"
-									ref={register({
-										required: { message: 'Este campo es requerido', value: true }
-									})}>
-									<option value={locationid}>{locationname}</option>
-									{locations}
-								</select>
+								<Autocomplete
+									id="eventLocationId"
+									options={event.locations}
+									getOptionLabel={option => option.name}
+									defaultValue={event.locations[event.locations.findIndex(l => l.name == locationname)]}
+									onChange={(event, newValue) => {setEventLocationId(newValue != null ? newValue.id : "")}}
+									renderInput={params => (
+										<TextField {...params} label="Lugar de Evento" variant="outlined" required fullWidth/>
+									)}
+								/>
 								{errors.eventLocationId && <span className="text-danger mb-2">{errors.eventLocationId.message}</span>}
 							</MDBCardBody>
 						</MDBCard>
