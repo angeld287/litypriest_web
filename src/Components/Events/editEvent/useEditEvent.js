@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listCategorys, listLocations, listContacts } from '../../../graphql/queries';
 import { getEvent } from '../../../graphql/custom-queries';
-import { updateEvent, createEventLocations, createEventContacts } from '../../../graphql/mutations';
+import { updateEvent, createEventLocations, createEventContacts, deleteEventLocations } from '../../../graphql/mutations';
 import Swal from 'sweetalert2';
 
 const useEditEvent = () => {
@@ -83,6 +83,7 @@ const useEditEvent = () => {
 			
 			if((inputEventLocation.eventLocationsLocationId !== locationid) && (inputEventLocation.eventLocationsLocationId !== "0")) {
 				await API.graphql(graphqlOperation(createEventLocations, {input: inputEventLocation} ));
+				await API.graphql(graphqlOperation(deleteEventLocations, {input: inputEventLocation} ));
 			}
 
 			await Swal.fire('Correcto', 'El evento se ha actualizado correctamente', 'success');
