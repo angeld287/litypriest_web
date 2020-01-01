@@ -3,8 +3,11 @@ import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBCard, MDBCardBody } from 'mdbr
 import Spinner from '../../Spinner/Spinner';
 import useNewEvent from './useNewEvent';
 
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
 const NewEvent = () => {
-	const { onSubmit, register, event, handleSubmit, errors, error, formState, setValue } = useNewEvent();
+	const { onSubmit, register, event, handleSubmit, errors, error, formState, setValue, setEventLocationId } = useNewEvent();
 
 	if (Object.entries(event).length === 0 && event.constructor === Object) return <Spinner />;
 
@@ -67,7 +70,7 @@ const NewEvent = () => {
 									name="description"
 									autoComplete="off"
 									ref={register({
-										required: { message: 'Este campo es requerido', value: true }
+										required: { message: 'Este campo es requerido', value: false }
 									})}
 								/>
 								{errors.description && <span className="text-danger mb-2">{errors.description.message}</span>}
@@ -105,13 +108,15 @@ const NewEvent = () => {
 								<label htmlFor="eventLocationId" className="grey-text font-weight-light">
 									Lugar de Evento:
 								</label>
-								<select name="eventLocationId" className="browser-default custom-select"
-									ref={register({
-										required: { message: 'Este campo es requerido', value: true }
-									})}>
-									<option value="0">Seleccione una opcion</option>
-									{locations}
-								</select>
+								<Autocomplete
+									id="eventLocationId"
+									options={event.locations}
+									getOptionLabel={option => option.name}
+									onChange={(event, newValue) => {setEventLocationId(newValue != null ? newValue.id : "")}}
+									renderInput={params => (
+										<TextField {...params} label="Lugar de Evento" variant="outlined" fullWidth/>
+									)}
+								/>
 								{errors.eventLocationId && <span className="text-danger mb-2">{errors.eventLocationId.message}</span>}
 
 								<div className="text-center py-4 mt-3">

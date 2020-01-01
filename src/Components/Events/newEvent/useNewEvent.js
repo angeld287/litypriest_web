@@ -11,6 +11,7 @@ const useNewEvent = () => {
 	let history = useHistory();
 	const [ event, setEvent ] = useState({});
 	const [ error, setError ] = useState(false);
+	const [ eventLocationId, setEventLocationId ] = useState('');
 
 	useEffect(
 		() => {
@@ -45,24 +46,46 @@ const useNewEvent = () => {
 
 	const onSubmit = async (input) => {
 		try {
+			
 			const inputEvent = {
 				name: input.name,
-				eventCategoryId: input.eventCategoryId,
-				description: input.description,
-				eventLocationId: input.eventLocationId
+				description: input.description
 			}
 
 			if(input.date !== ""){
 				inputEvent.date = input.date
+			}else{
+				Swal.fire('Campo Obligatorio', 'Favor completar el campo Fecha', 'error');
+				return;
+			}
+
+			if(input.eventCategoryId !== "0"){
+				inputEvent.eventCategoryId = input.eventCategoryId
+			}else{
+				Swal.fire('Campo Obligatorio', 'Favor completar el campo Tipo de Evento', 'error');
+				return;
+			}
+
+			if(input.eventContactId == "0"){
+				Swal.fire('Campo Obligatorio', 'Favor completar el campo Contacto', 'error');
+				return;
+			}
+
+			if(eventLocationId !== ""){
+				inputEvent.eventLocationId = eventLocationId
+			}else{
+				Swal.fire('Campo Obligatorio', 'Favor completar el campo Lugar de Evento', 'error');
+				return;
 			}
 
 			const event = await API.graphql(graphqlOperation(createEvent, { input: inputEvent }));
+
 			const inputEventContact = {
 				eventContactsEventId: event.data.createEvent.id,
 				eventContactsContactId: input.eventContactId
 			}
 
-			if(inputEventContact.eventContactsContactId !== "0"){ await API.graphql(graphqlOperation(createEventContacts, {input: inputEventContact} )); }
+			await API.graphql(graphqlOperation(createEventContacts, {input: inputEventContact} ));
 			
 			await Swal.fire('Correcto', 'El evento se ha creado correctamente', 'success');
 			history.push('/events');
@@ -71,7 +94,7 @@ const useNewEvent = () => {
 		}
 	};
 
-	return { onSubmit, register, handleSubmit, errors, error, formState, event, setValue };
+	return { onSubmit, register, handleSubmit, errors, error, formState, event, setValue, setEventLocationId };
 };
 
 export default useNewEvent;
