@@ -3,7 +3,7 @@ import useForm from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { listCategorys, listLocations, listContacts } from '../../../graphql/queries';
 import { API, graphqlOperation } from 'aws-amplify';
-import { createEvent, createEventLocations, createEventContacts } from '../../../graphql/mutations';
+import { createEvent, createEventContacts } from '../../../graphql/mutations';
 import Swal from 'sweetalert2';
 
 const useNewEvent = () => {
@@ -48,7 +48,8 @@ const useNewEvent = () => {
 			const inputEvent = {
 				name: input.name,
 				eventCategoryId: input.eventCategoryId,
-				description: input.description
+				description: input.description,
+				eventLocationId: input.eventLocationId
 			}
 
 			if(input.date !== ""){
@@ -61,13 +62,7 @@ const useNewEvent = () => {
 				eventContactsContactId: input.eventContactId
 			}
 
-			const inputEventLocation = {
-				eventLocationsEventId: event.data.createEvent.id,
-				eventLocationsLocationId: input.eventLocationId
-			}
-
 			if(inputEventContact.eventContactsContactId !== "0"){ await API.graphql(graphqlOperation(createEventContacts, {input: inputEventContact} )); }
-			if(inputEventLocation.eventLocationsLocationId !== "0"){ await API.graphql(graphqlOperation(createEventLocations, {input: inputEventLocation} )); }
 			
 			await Swal.fire('Correcto', 'El evento se ha creado correctamente', 'success');
 			history.push('/events');

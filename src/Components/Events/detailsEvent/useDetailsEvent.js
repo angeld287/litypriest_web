@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import useForm from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
 import { API, graphqlOperation } from 'aws-amplify';
-import { listCategorys, listLocations, listContacts } from '../../../graphql/queries';
 import { getEvent } from '../../../graphql/custom-queries';
 import { updateEvent, createEventLocations, createEventContacts } from '../../../graphql/mutations';
 import Swal from 'sweetalert2';
