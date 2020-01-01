@@ -9,6 +9,7 @@ type Location
     ]){
     id: ID!
     name: String!
+    category: Category @connection
     contact: Contact @connection
 }
 

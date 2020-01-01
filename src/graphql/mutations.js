@@ -5,6 +5,12 @@ export const createLocation = `mutation CreateLocation($input: CreateLocationInp
   createLocation(input: $input) {
     id
     name
+    category {
+      id
+      name
+      description
+      module
+    }
     contact {
       id
       name
@@ -20,6 +26,12 @@ export const updateLocation = `mutation UpdateLocation($input: UpdateLocationInp
   updateLocation(input: $input) {
     id
     name
+    category {
+      id
+      name
+      description
+      module
+    }
     contact {
       id
       name
@@ -35,6 +47,12 @@ export const deleteLocation = `mutation DeleteLocation($input: DeleteLocationInp
   deleteLocation(input: $input) {
     id
     name
+    category {
+      id
+      name
+      description
+      module
+    }
     contact {
       id
       name
@@ -130,6 +148,12 @@ export const createEvent = `mutation CreateEvent($input: CreateEventInput!) {
     location {
       id
       name
+      category {
+        id
+        name
+        description
+        module
+      }
       contact {
         id
         name
@@ -164,6 +188,12 @@ export const updateEvent = `mutation UpdateEvent($input: UpdateEventInput!) {
     location {
       id
       name
+      category {
+        id
+        name
+        description
+        module
+      }
       contact {
         id
         name
@@ -198,6 +228,12 @@ export const deleteEvent = `mutation DeleteEvent($input: DeleteEventInput!) {
     location {
       id
       name
+      category {
+        id
+        name
+        description
+        module
+      }
       contact {
         id
         name

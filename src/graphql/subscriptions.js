@@ -5,6 +5,12 @@ export const onCreateLocation = `subscription OnCreateLocation {
   onCreateLocation {
     id
     name
+    category {
+      id
+      name
+      description
+      module
+    }
     contact {
       id
       name
@@ -20,6 +26,12 @@ export const onUpdateLocation = `subscription OnUpdateLocation {
   onUpdateLocation {
     id
     name
+    category {
+      id
+      name
+      description
+      module
+    }
     contact {
       id
       name
@@ -35,6 +47,12 @@ export const onDeleteLocation = `subscription OnDeleteLocation {
   onDeleteLocation {
     id
     name
+    category {
+      id
+      name
+      description
+      module
+    }
     contact {
       id
       name
@@ -130,6 +148,12 @@ export const onCreateEvent = `subscription OnCreateEvent {
     location {
       id
       name
+      category {
+        id
+        name
+        description
+        module
+      }
       contact {
         id
         name
@@ -164,6 +188,12 @@ export const onUpdateEvent = `subscription OnUpdateEvent {
     location {
       id
       name
+      category {
+        id
+        name
+        description
+        module
+      }
       contact {
         id
         name
@@ -198,6 +228,12 @@ export const onDeleteEvent = `subscription OnDeleteEvent {
     location {
       id
       name
+      category {
+        id
+        name
+        description
+        module
+      }
       contact {
         id
         name

@@ -5,6 +5,12 @@ export const getLocation = `query GetLocation($id: ID!) {
   getLocation(id: $id) {
     id
     name
+    category {
+      id
+      name
+      description
+      module
+    }
     contact {
       id
       name
@@ -25,6 +31,12 @@ export const listLocations = `query ListLocations(
     items {
       id
       name
+      category {
+        id
+        name
+        description
+        module
+      }
       contact {
         id
         name
@@ -107,6 +119,12 @@ export const getEvent = `query GetEvent($id: ID!) {
     location {
       id
       name
+      category {
+        id
+        name
+        description
+        module
+      }
       contact {
         id
         name
