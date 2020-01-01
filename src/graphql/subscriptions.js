@@ -5,6 +5,14 @@ export const onCreateLocation = `subscription OnCreateLocation {
   onCreateLocation {
     id
     name
+    contact {
+      id
+      name
+      phone
+      events {
+        nextToken
+      }
+    }
   }
 }
 `;
@@ -12,6 +20,14 @@ export const onUpdateLocation = `subscription OnUpdateLocation {
   onUpdateLocation {
     id
     name
+    contact {
+      id
+      name
+      phone
+      events {
+        nextToken
+      }
+    }
   }
 }
 `;
@@ -19,6 +35,14 @@ export const onDeleteLocation = `subscription OnDeleteLocation {
   onDeleteLocation {
     id
     name
+    contact {
+      id
+      name
+      phone
+      events {
+        nextToken
+      }
+    }
   }
 }
 `;
@@ -69,6 +93,7 @@ export const onCreateCategory = `subscription OnCreateCategory {
     id
     name
     description
+    module
   }
 }
 `;
@@ -77,6 +102,7 @@ export const onUpdateCategory = `subscription OnUpdateCategory {
     id
     name
     description
+    module
   }
 }
 `;
@@ -85,6 +111,7 @@ export const onDeleteCategory = `subscription OnDeleteCategory {
     id
     name
     description
+    module
   }
 }
 `;
@@ -96,12 +123,18 @@ export const onCreateEvent = `subscription OnCreateEvent {
       id
       name
       description
+      module
     }
     date
     description
     location {
       id
       name
+      contact {
+        id
+        name
+        phone
+      }
     }
     contacts {
       items {
@@ -124,12 +157,18 @@ export const onUpdateEvent = `subscription OnUpdateEvent {
       id
       name
       description
+      module
     }
     date
     description
     location {
       id
       name
+      contact {
+        id
+        name
+        phone
+      }
     }
     contacts {
       items {
@@ -152,12 +191,18 @@ export const onDeleteEvent = `subscription OnDeleteEvent {
       id
       name
       description
+      module
     }
     date
     description
     location {
       id
       name
+      contact {
+        id
+        name
+        phone
+      }
     }
     contacts {
       items {
@@ -182,6 +227,7 @@ export const onCreateEventContacts = `subscription OnCreateEventContacts {
         id
         name
         description
+        module
       }
       date
       description
@@ -218,6 +264,7 @@ export const onUpdateEventContacts = `subscription OnUpdateEventContacts {
         id
         name
         description
+        module
       }
       date
       description
@@ -254,6 +301,7 @@ export const onDeleteEventContacts = `subscription OnDeleteEventContacts {
         id
         name
         description
+        module
       }
       date
       description

@@ -9,6 +9,7 @@ type Location
     ]){
     id: ID!
     name: String!
+    contact: Contact @connection
 }
 
 type Contact
@@ -37,6 +38,7 @@ type Category
     id: ID!
     name: String
     description: String
+    module: String
 }
 
 type Event

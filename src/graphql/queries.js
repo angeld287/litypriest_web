@@ -5,6 +5,14 @@ export const getLocation = `query GetLocation($id: ID!) {
   getLocation(id: $id) {
     id
     name
+    contact {
+      id
+      name
+      phone
+      events {
+        nextToken
+      }
+    }
   }
 }
 `;
@@ -17,6 +25,11 @@ export const listLocations = `query ListLocations(
     items {
       id
       name
+      contact {
+        id
+        name
+        phone
+      }
     }
     nextToken
   }
@@ -59,6 +72,7 @@ export const getCategory = `query GetCategory($id: ID!) {
     id
     name
     description
+    module
   }
 }
 `;
@@ -72,6 +86,7 @@ export const listCategorys = `query ListCategorys(
       id
       name
       description
+      module
     }
     nextToken
   }
@@ -85,12 +100,18 @@ export const getEvent = `query GetEvent($id: ID!) {
       id
       name
       description
+      module
     }
     date
     description
     location {
       id
       name
+      contact {
+        id
+        name
+        phone
+      }
     }
     contacts {
       items {
@@ -118,6 +139,7 @@ export const listEvents = `query ListEvents(
         id
         name
         description
+        module
       }
       date
       description
