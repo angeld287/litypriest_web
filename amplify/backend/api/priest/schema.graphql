@@ -62,6 +62,7 @@ type Event
     secretary: String
     priest: String
     createdAt: String
+    duration: String
 }
 
 type EventContacts @model(queries: null) {

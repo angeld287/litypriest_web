@@ -112,6 +112,7 @@ export const onCreateEvent = `subscription OnCreateEvent {
     secretary
     priest
     createdAt
+    duration
   }
 }
 `;
@@ -139,6 +140,7 @@ export const onUpdateEvent = `subscription OnUpdateEvent {
     secretary
     priest
     createdAt
+    duration
   }
 }
 `;
@@ -166,6 +168,7 @@ export const onDeleteEvent = `subscription OnDeleteEvent {
     secretary
     priest
     createdAt
+    duration
   }
 }
 `;
@@ -192,6 +195,7 @@ export const onCreateEventContacts = `subscription OnCreateEventContacts {
       secretary
       priest
       createdAt
+      duration
     }
     contact {
       id
@@ -227,6 +231,7 @@ export const onUpdateEventContacts = `subscription OnUpdateEventContacts {
       secretary
       priest
       createdAt
+      duration
     }
     contact {
       id
@@ -262,6 +267,7 @@ export const onDeleteEventContacts = `subscription OnDeleteEventContacts {
       secretary
       priest
       createdAt
+      duration
     }
     contact {
       id

@@ -112,6 +112,7 @@ export const createEvent = `mutation CreateEvent($input: CreateEventInput!) {
     secretary
     priest
     createdAt
+    duration
   }
 }
 `;
@@ -139,6 +140,7 @@ export const updateEvent = `mutation UpdateEvent($input: UpdateEventInput!) {
     secretary
     priest
     createdAt
+    duration
   }
 }
 `;
@@ -166,6 +168,7 @@ export const deleteEvent = `mutation DeleteEvent($input: DeleteEventInput!) {
     secretary
     priest
     createdAt
+    duration
   }
 }
 `;
@@ -192,6 +195,7 @@ export const createEventContacts = `mutation CreateEventContacts($input: CreateE
       secretary
       priest
       createdAt
+      duration
     }
     contact {
       id
@@ -227,6 +231,7 @@ export const updateEventContacts = `mutation UpdateEventContacts($input: UpdateE
       secretary
       priest
       createdAt
+      duration
     }
     contact {
       id
@@ -262,6 +267,7 @@ export const deleteEventContacts = `mutation DeleteEventContacts($input: DeleteE
       secretary
       priest
       createdAt
+      duration
     }
     contact {
       id

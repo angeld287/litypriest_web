@@ -101,6 +101,7 @@ export const getEvent = `query GetEvent($id: ID!) {
     secretary
     priest
     createdAt
+    duration
   }
 }
 `;
@@ -130,6 +131,7 @@ export const listEvents = `query ListEvents(
       secretary
       priest
       createdAt
+      duration
     }
     nextToken
   }
