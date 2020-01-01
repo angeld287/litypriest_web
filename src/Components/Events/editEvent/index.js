@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const EditEvent = () => {
-	const { onSubmit, event, register, handleSubmit, errors, error, setValue, setEventLocationId } = useEditEvent();
+	const { onSubmit, event, register, handleSubmit, errors, error, setValue, setEventLocationId, setDate } = useEditEvent();
 	
 	if (Object.entries(event).length === 0 && event.constructor === Object) return <Spinner />;
 
@@ -62,27 +62,6 @@ const EditEvent = () => {
 								{errors.name && <span className="text-danger mb-2">{errors.name.message}</span>}
 
 								<br />
-								<label htmlFor="eventCategoryId" className="grey-text font-weight-light">
-									Tipo de Evento:
-								</label>
-								<select name="eventCategoryId" className="browser-default custom-select"
-									ref={register({
-										required: { message: 'Este campo es requerido', value: true }
-									})}>
-									<option value={categoryid}>{categoryname}</option>
-									{categories}
-								</select>
-								{errors.categoryid && <span className="text-danger mb-2">{errors.categoryid.message}</span>}
-
-								<br />
-								<label htmlFor="date" className="grey-text font-weight-light">
-									Fecha del Evento:
-								</label>
-								<input type="date" name="date" className="form-control" min="2018-01-01" max="3000-12-31" ref={register}/>
-								{errors.date && <span className="text-danger mb-2">{errors.date.message}</span>}
-
-
-								<br />
 
 								<label htmlFor="description" className="grey-text font-weight-light">
 									Descripcion del Evento:
@@ -98,6 +77,60 @@ const EditEvent = () => {
 									})}
 								/>
 								{errors.description && <span className="text-danger mb-2">{errors.description.message}</span>}
+								<br />
+								<MDBRow center={true}>
+									<MDBCol md="5">
+{/* date */}
+										<label htmlFor="date" className="grey-text font-weight-light">
+											Fecha del Evento:
+										</label>
+										<br/>
+										<TextField
+											id="date"
+											type="datetime-local"
+											defaultValue={event.event.date}
+											className="form-control"
+											onChange={(e) => {setDate(e.target.value)}}
+											InputLabelProps={{
+												shrink: true,
+											}}
+										/>
+									
+										{errors.date && <span className="text-danger mb-2">{errors.date.message}</span>}
+									</MDBCol>
+									<MDBCol md="5">
+
+{/* duration */}
+										<label htmlFor="duration" className="grey-text font-weight-light">
+											Duracion del Evento en horas:
+										</label>
+										<input
+											name="duration"
+											autoComplete="off"
+											defaultValue={event.event.duration}
+											className="form-control"
+											ref={register({ 
+												required: { message: 'Este campo es requerido', value: true },
+												pattern: { value: /^[0-9]+$/i, message: 'Este campo solo acepta números' }
+											 })}
+										/>
+										{errors.duration && <span className="text-danger mb-2">{errors.duration.message}</span>}
+										
+									</MDBCol>
+								</MDBRow>
+
+								<br />
+								<label htmlFor="eventCategoryId" className="grey-text font-weight-light">
+									Tipo de Evento:
+								</label>
+								<select name="eventCategoryId" className="browser-default custom-select"
+									ref={register({
+										required: { message: 'Este campo es requerido', value: true }
+									})}>
+									<option value={categoryid}>{categoryname}</option>
+									{categories}
+								</select>
+								{errors.categoryid && <span className="text-danger mb-2">{errors.categoryid.message}</span>}
 							</MDBCardBody>
 						</MDBCard>
 					</MDBCol>
