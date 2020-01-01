@@ -9,6 +9,8 @@ type Location
     ]){
     id: ID!
     name: String!
+    category: Category @connection
+    contact: Contact @connection
 }
 
 type Contact
@@ -37,6 +39,7 @@ type Category
     id: ID!
     name: String
     description: String
+    module: String
 }
 
 type Event
@@ -62,6 +65,7 @@ type Event
     secretary: String
     priest: String
     createdAt: String
+    duration: String
 }
 
 type EventContacts @model(queries: null) {

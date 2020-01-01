@@ -5,6 +5,20 @@ export const createLocation = `mutation CreateLocation($input: CreateLocationInp
   createLocation(input: $input) {
     id
     name
+    category {
+      id
+      name
+      description
+      module
+    }
+    contact {
+      id
+      name
+      phone
+      events {
+        nextToken
+      }
+    }
   }
 }
 `;
@@ -12,6 +26,20 @@ export const updateLocation = `mutation UpdateLocation($input: UpdateLocationInp
   updateLocation(input: $input) {
     id
     name
+    category {
+      id
+      name
+      description
+      module
+    }
+    contact {
+      id
+      name
+      phone
+      events {
+        nextToken
+      }
+    }
   }
 }
 `;
@@ -19,6 +47,20 @@ export const deleteLocation = `mutation DeleteLocation($input: DeleteLocationInp
   deleteLocation(input: $input) {
     id
     name
+    category {
+      id
+      name
+      description
+      module
+    }
+    contact {
+      id
+      name
+      phone
+      events {
+        nextToken
+      }
+    }
   }
 }
 `;
@@ -69,6 +111,7 @@ export const createCategory = `mutation CreateCategory($input: CreateCategoryInp
     id
     name
     description
+    module
   }
 }
 `;
@@ -77,6 +120,7 @@ export const updateCategory = `mutation UpdateCategory($input: UpdateCategoryInp
     id
     name
     description
+    module
   }
 }
 `;
@@ -85,6 +129,7 @@ export const deleteCategory = `mutation DeleteCategory($input: DeleteCategoryInp
     id
     name
     description
+    module
   }
 }
 `;
@@ -96,12 +141,24 @@ export const createEvent = `mutation CreateEvent($input: CreateEventInput!) {
       id
       name
       description
+      module
     }
     date
     description
     location {
       id
       name
+      category {
+        id
+        name
+        description
+        module
+      }
+      contact {
+        id
+        name
+        phone
+      }
     }
     contacts {
       items {
@@ -112,6 +169,7 @@ export const createEvent = `mutation CreateEvent($input: CreateEventInput!) {
     secretary
     priest
     createdAt
+    duration
   }
 }
 `;
@@ -123,12 +181,24 @@ export const updateEvent = `mutation UpdateEvent($input: UpdateEventInput!) {
       id
       name
       description
+      module
     }
     date
     description
     location {
       id
       name
+      category {
+        id
+        name
+        description
+        module
+      }
+      contact {
+        id
+        name
+        phone
+      }
     }
     contacts {
       items {
@@ -139,6 +209,7 @@ export const updateEvent = `mutation UpdateEvent($input: UpdateEventInput!) {
     secretary
     priest
     createdAt
+    duration
   }
 }
 `;
@@ -150,12 +221,24 @@ export const deleteEvent = `mutation DeleteEvent($input: DeleteEventInput!) {
       id
       name
       description
+      module
     }
     date
     description
     location {
       id
       name
+      category {
+        id
+        name
+        description
+        module
+      }
+      contact {
+        id
+        name
+        phone
+      }
     }
     contacts {
       items {
@@ -166,6 +249,7 @@ export const deleteEvent = `mutation DeleteEvent($input: DeleteEventInput!) {
     secretary
     priest
     createdAt
+    duration
   }
 }
 `;
@@ -179,6 +263,7 @@ export const createEventContacts = `mutation CreateEventContacts($input: CreateE
         id
         name
         description
+        module
       }
       date
       description
@@ -192,6 +277,7 @@ export const createEventContacts = `mutation CreateEventContacts($input: CreateE
       secretary
       priest
       createdAt
+      duration
     }
     contact {
       id
@@ -214,6 +300,7 @@ export const updateEventContacts = `mutation UpdateEventContacts($input: UpdateE
         id
         name
         description
+        module
       }
       date
       description
@@ -227,6 +314,7 @@ export const updateEventContacts = `mutation UpdateEventContacts($input: UpdateE
       secretary
       priest
       createdAt
+      duration
     }
     contact {
       id
@@ -249,6 +337,7 @@ export const deleteEventContacts = `mutation DeleteEventContacts($input: DeleteE
         id
         name
         description
+        module
       }
       date
       description
@@ -262,6 +351,7 @@ export const deleteEventContacts = `mutation DeleteEventContacts($input: DeleteE
       secretary
       priest
       createdAt
+      duration
     }
     contact {
       id
