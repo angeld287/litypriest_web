@@ -28,7 +28,7 @@ const DetailsEvent = () => {
 	const categoryname = (event.category === null)?("No hay categoria seleccionada"):(event.category.name);
 	const contactname = (event.contacts.items[0] === undefined)?("No hay contacto seleccionado"):(event.contacts.items[0].contact.name);
 	const contactphone = (event.contacts.items[0] === undefined)?("No hay contacto seleccionado"):(event.contacts.items[0].contact.phone);
-	const locationname = (event.location.items[0] === undefined)?("No hay mapa seleccionado"):(event.location.items[0].location.name);
+	const locationname = (event.location === null)?("No hay mapa seleccionado"):(event.location.name);
 
 	const data = String(locationname);
     const locationUrl = data.split(' ').join('%20');

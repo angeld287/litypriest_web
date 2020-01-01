@@ -15,11 +15,8 @@ export const listEvents = `query ListEvents(
       date
       description
       location {
-        items {
-          location {
-            name
-          }
-        }
+        id
+        name
       }
       contacts {
         items {
@@ -50,13 +47,8 @@ export const getEvent = `query GetEvent($id: ID!) {
     date
     description
     location {
-      items {
-        location{
-          id
-          name
-        }
-      }
-      nextToken
+      id
+      name
     }
     contacts {
       items {

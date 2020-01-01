@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listCategorys, listLocations, listContacts } from '../../../graphql/queries';
 import { getEvent } from '../../../graphql/custom-queries';
-import { updateEvent, createEventLocations, createEventContacts } from '../../../graphql/mutations';
+import { updateEvent, createEventContacts } from '../../../graphql/mutations';
 import Swal from 'sweetalert2';
 
 const useEditEvent = () => {
@@ -55,7 +55,8 @@ const useEditEvent = () => {
 			id: id,
 			name: input.name,
 			eventCategoryId: input.eventCategoryId,
-			description: input.description
+			description: input.description,
+			eventLocationId: input.eventLocationId
 		}
 
 		if(input.date !== ""){
@@ -64,27 +65,18 @@ const useEditEvent = () => {
 
 		const event = await API.graphql(graphqlOperation(getEvent, { id }));
 		const contactid = (event.data.getEvent.contacts.items[0] === undefined)?("0"):(event.data.getEvent.contacts.items[0].contact.id);
-		const locationid = (event.data.getEvent.location.items[0] === undefined)?("0"):(event.data.getEvent.location.items[0].location.id);
 
 		const inputEventContact = {
 			eventContactsEventId: id,
     		eventContactsContactId: input.eventContactId
 		}
 
-		const inputEventLocation = {
-			eventLocationsEventId: id,
-    		eventLocationsLocationId: input.eventLocationId
-		}
 		try {
 			await API.graphql(graphqlOperation(updateEvent, {input: inputEvent} ));
 			if((inputEventContact.eventContactsContactId !== contactid) && (inputEventContact.eventContactsContactId !== "0")) {
 				await API.graphql(graphqlOperation(createEventContacts, {input: inputEventContact} ));
 			}
 			
-			if((inputEventLocation.eventLocationsLocationId !== locationid) && (inputEventLocation.eventLocationsLocationId !== "0")) {
-				await API.graphql(graphqlOperation(createEventLocations, {input: inputEventLocation} ));
-			}
-
 			await Swal.fire('Correcto', 'El evento se ha actualizado correctamente', 'success');
 			history.push('/events');
 		} catch (e) {

@@ -5,12 +5,6 @@ export const onCreateLocation = `subscription OnCreateLocation {
   onCreateLocation {
     id
     name
-    events {
-      items {
-        id
-      }
-      nextToken
-    }
   }
 }
 `;
@@ -18,12 +12,6 @@ export const onUpdateLocation = `subscription OnUpdateLocation {
   onUpdateLocation {
     id
     name
-    events {
-      items {
-        id
-      }
-      nextToken
-    }
   }
 }
 `;
@@ -31,12 +19,6 @@ export const onDeleteLocation = `subscription OnDeleteLocation {
   onDeleteLocation {
     id
     name
-    events {
-      items {
-        id
-      }
-      nextToken
-    }
   }
 }
 `;
@@ -118,10 +100,8 @@ export const onCreateEvent = `subscription OnCreateEvent {
     date
     description
     location {
-      items {
-        id
-      }
-      nextToken
+      id
+      name
     }
     contacts {
       items {
@@ -147,10 +127,8 @@ export const onUpdateEvent = `subscription OnUpdateEvent {
     date
     description
     location {
-      items {
-        id
-      }
-      nextToken
+      id
+      name
     }
     contacts {
       items {
@@ -176,10 +154,8 @@ export const onDeleteEvent = `subscription OnDeleteEvent {
     date
     description
     location {
-      items {
-        id
-      }
-      nextToken
+      id
+      name
     }
     contacts {
       items {
@@ -207,7 +183,8 @@ export const onCreateEventContacts = `subscription OnCreateEventContacts {
       date
       description
       location {
-        nextToken
+        id
+        name
       }
       contacts {
         nextToken
@@ -241,7 +218,8 @@ export const onUpdateEventContacts = `subscription OnUpdateEventContacts {
       date
       description
       location {
-        nextToken
+        id
+        name
       }
       contacts {
         nextToken
@@ -275,7 +253,8 @@ export const onDeleteEventContacts = `subscription OnDeleteEventContacts {
       date
       description
       location {
-        nextToken
+        id
+        name
       }
       contacts {
         nextToken
@@ -288,105 +267,6 @@ export const onDeleteEventContacts = `subscription OnDeleteEventContacts {
       id
       name
       phone
-      events {
-        nextToken
-      }
-    }
-  }
-}
-`;
-export const onCreateEventLocations = `subscription OnCreateEventLocations {
-  onCreateEventLocations {
-    id
-    event {
-      id
-      name
-      category {
-        id
-        name
-        description
-      }
-      date
-      description
-      location {
-        nextToken
-      }
-      contacts {
-        nextToken
-      }
-      secretary
-      priest
-      createdAt
-    }
-    location {
-      id
-      name
-      events {
-        nextToken
-      }
-    }
-  }
-}
-`;
-export const onUpdateEventLocations = `subscription OnUpdateEventLocations {
-  onUpdateEventLocations {
-    id
-    event {
-      id
-      name
-      category {
-        id
-        name
-        description
-      }
-      date
-      description
-      location {
-        nextToken
-      }
-      contacts {
-        nextToken
-      }
-      secretary
-      priest
-      createdAt
-    }
-    location {
-      id
-      name
-      events {
-        nextToken
-      }
-    }
-  }
-}
-`;
-export const onDeleteEventLocations = `subscription OnDeleteEventLocations {
-  onDeleteEventLocations {
-    id
-    event {
-      id
-      name
-      category {
-        id
-        name
-        description
-      }
-      date
-      description
-      location {
-        nextToken
-      }
-      contacts {
-        nextToken
-      }
-      secretary
-      priest
-      createdAt
-    }
-    location {
-      id
-      name
       events {
         nextToken
       }
