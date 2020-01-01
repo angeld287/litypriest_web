@@ -14,6 +14,7 @@ const useEditEvent = () => {
 	const [ error, setError ] = useState(false);
 	const { register, handleSubmit, errors, setValue } = useForm();
 	const [ eventLocationId, setEventLocationId ] = useState('');
+	const [ date, setDate ] = useState(new Date());
 
 	useEffect(
 		() => {
@@ -56,10 +57,11 @@ const useEditEvent = () => {
 			id: id,
 			name: input.name,
 			description: input.description,
+			duration: input.duration
 		}
 
-		if(input.date !== ""){
-			inputEvent.date = input.date
+		if(date !== ""){
+			inputEvent.date = date
 		}
 
 		if(input.eventCategoryId !== "0"){
@@ -101,7 +103,7 @@ const useEditEvent = () => {
 		}
 	};
 
-	return { onSubmit, event, register, handleSubmit, setValue, errors, error, setEventLocationId };
+	return { onSubmit, event, register, handleSubmit, setValue, errors, error, setEventLocationId, setDate };
 };
 
 export default useEditEvent;

@@ -63,6 +63,7 @@ export const getEvent = `query GetEvent($id: ID!) {
     secretary
     priest
     createdAt
+    duration
   }
 }
 `;

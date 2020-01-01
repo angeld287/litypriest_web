@@ -12,6 +12,7 @@ const useNewEvent = () => {
 	const [ event, setEvent ] = useState({});
 	const [ error, setError ] = useState(false);
 	const [ eventLocationId, setEventLocationId ] = useState('');
+	const [ date, setDate ] = useState(new Date());
 
 	useEffect(
 		() => {
@@ -49,11 +50,12 @@ const useNewEvent = () => {
 			
 			const inputEvent = {
 				name: input.name,
-				description: input.description
+				description: input.description,
+				duration: input.duration
 			}
-
-			if(input.date !== ""){
-				inputEvent.date = input.date
+			
+			if(date !== ""){
+				inputEvent.date = date
 			}else{
 				Swal.fire('Campo Obligatorio', 'Favor completar el campo Fecha', 'error');
 				return;
@@ -94,7 +96,7 @@ const useNewEvent = () => {
 		}
 	};
 
-	return { onSubmit, register, handleSubmit, errors, error, formState, event, setValue, setEventLocationId };
+	return { onSubmit, register, handleSubmit, errors, error, formState, event, setValue, setEventLocationId, setDate };
 };
 
 export default useNewEvent;

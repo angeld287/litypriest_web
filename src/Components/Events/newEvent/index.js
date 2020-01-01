@@ -5,15 +5,19 @@ import useNewEvent from './useNewEvent';
 
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { makeStyles } from '@material-ui/core/styles';
 
 const NewEvent = () => {
-	const { onSubmit, register, event, handleSubmit, errors, error, formState, setValue, setEventLocationId } = useNewEvent();
+	const { onSubmit, register, event, handleSubmit, errors, error, formState, setValue, setEventLocationId, setDate } = useNewEvent();
 
 	if (Object.entries(event).length === 0 && event.constructor === Object) return <Spinner />;
 
 	if (error) {
 		return (
 			<MDBContainer>
+				<br/>
+				<br/>
+				<br/>
 				<h3>Ha ocurrido un error</h3>
 			</MDBContainer>
 		);
@@ -52,14 +56,6 @@ const NewEvent = () => {
 								{errors.name && <span className="text-danger mb-2">{errors.name.message}</span>}
 
 								<br />
-{/* date */}
-								<label htmlFor="name" className="grey-text font-weight-light">
-									Fecha del Evento:
-								</label>
-								<input type="date" name="date" className="form-control" min="2018-01-01" max="3000-12-31" ref={register}/>
-								{errors.date && <span className="text-danger mb-2">{errors.date.message}</span>}
-
-								<br />
 {/* description */}
 								<label htmlFor="description" className="grey-text font-weight-light">
 									Descripcion del Evento:
@@ -76,6 +72,46 @@ const NewEvent = () => {
 								{errors.description && <span className="text-danger mb-2">{errors.description.message}</span>}
 
 								<br />
+								<MDBRow center={true}>
+									<MDBCol md="5">
+{/* date */}
+										<label htmlFor="date" className="grey-text font-weight-light">
+											Fecha del Evento:
+										</label>
+										<br/>
+										<TextField
+											id="date"
+											type="datetime-local"
+											defaultValue="2020-01-01T01:00"
+											className="form-control"
+											onChange={(e) => {setDate(e.target.value)}}
+											InputLabelProps={{
+												shrink: true,
+											}}
+										/>
+									
+										{errors.date && <span className="text-danger mb-2">{errors.date.message}</span>}
+									</MDBCol>
+									<MDBCol md="5">
+
+{/* duration */}
+										<label htmlFor="duration" className="grey-text font-weight-light">
+											Duracion del Evento en horas:
+										</label>
+										<input
+											name="duration"
+											autoComplete="off"
+											className="form-control"
+											ref={register({ 
+												required: { message: 'Este campo es requerido', value: true },
+												pattern: { value: /^[0-9]+$/i, message: 'Este campo solo acepta números' }
+											 })}
+										/>
+										{errors.duration && <span className="text-danger mb-2">{errors.duration.message}</span>}
+										
+									</MDBCol>
+								</MDBRow>
+								<br/>
 {/* category */}
 								<label htmlFor="eventCategoryId" className="grey-text font-weight-light">
 									Tipo de Evento:
@@ -88,7 +124,7 @@ const NewEvent = () => {
 									{categories}
 								</select>
 								{errors.categoryid && <span className="text-danger mb-2">{errors.categoryid.message}</span>}
-								
+
 								<br />
 								<p className="h4 text-center py-4">Contacto y Lugar del Evento</p>
 
