@@ -5,6 +5,7 @@ import { listCategorys, listLocations, listContacts } from '../../../graphql/que
 import { API, graphqlOperation } from 'aws-amplify';
 import { createEvent, createEventContacts } from '../../../graphql/mutations';
 import Swal from 'sweetalert2';
+import { uniq } from '../../Functions'
 
 const useNewEvent = () => {
 	const { register, handleSubmit, errors, formState, setValue } = useForm();
@@ -12,6 +13,7 @@ const useNewEvent = () => {
 	const [ event, setEvent ] = useState({});
 	const [ error, setError ] = useState(false);
 	const [ eventLocationId, setEventLocationId ] = useState('');
+	const [ eventContacts, setEventContacts ] = useState([]);
 	const [ date, setDate ] = useState(new Date());
 
 	useEffect(
@@ -47,7 +49,6 @@ const useNewEvent = () => {
 
 	const onSubmit = async (input) => {
 		try {
-			
 			const inputEvent = {
 				name: input.name,
 				description: input.description,
@@ -68,7 +69,7 @@ const useNewEvent = () => {
 				return;
 			}
 
-			if(input.eventContactId == "0"){
+			if(eventContacts == []){
 				Swal.fire('Campo Obligatorio', 'Favor completar el campo Contacto', 'error');
 				return;
 			}
@@ -82,21 +83,24 @@ const useNewEvent = () => {
 
 			const event = await API.graphql(graphqlOperation(createEvent, { input: inputEvent }));
 
-			const inputEventContact = {
-				eventContactsEventId: event.data.createEvent.id,
-				eventContactsContactId: input.eventContactId
-			}
+			const createContacts = uniq(eventContacts, "id");
 
-			await API.graphql(graphqlOperation(createEventContacts, {input: inputEventContact} ));
+			createContacts.forEach(e => {
+				const inputEventContact = {
+					eventContactsEventId: event.data.createEvent.id,
+					eventContactsContactId: e.id
+				};
+				API.graphql(graphqlOperation(createEventContacts, {input: inputEventContact} ));
+			});
 			
 			await Swal.fire('Correcto', 'El evento se ha creado correctamente', 'success');
 			history.push('/events');
 		} catch (error) {
-			Swal.fire('Ha ocurrido un error', 'Intentelo de nuevo mas tarde', 'error');
+			Swal.fire('Ha ocurrido un error', 'Intentelo de nuevo mas tarde'+error, 'error');
 		}
 	};
 
-	return { onSubmit, register, handleSubmit, errors, error, formState, event, setValue, setEventLocationId, setDate };
+	return { onSubmit, register, handleSubmit, errors, error, formState, event, setValue, setEventLocationId, setDate, setEventContacts };
 };
 
 export default useNewEvent;

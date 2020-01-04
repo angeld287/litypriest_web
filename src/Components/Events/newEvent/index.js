@@ -8,7 +8,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 
 const NewEvent = () => {
-	const { onSubmit, register, event, handleSubmit, errors, error, formState, setValue, setEventLocationId, setDate } = useNewEvent();
+	const { onSubmit, register, event, handleSubmit, errors, error, formState, setValue, setEventLocationId, setDate, setEventContacts } = useNewEvent();
 
 	if (Object.entries(event).length === 0 && event.constructor === Object) return <Spinner />;
 
@@ -31,9 +31,7 @@ const NewEvent = () => {
       return (<option key={i} value={location.id}>{location.name}</option>)
     });
 
-	let contacts = event.contacts.map((contact, i) => {
-      return (<option key={i} value={contact.id}>{contact.name}</option>)
-    });
+	let contacts = event.contacts;
 
 	return (
 		<MDBContainer>
@@ -128,17 +126,20 @@ const NewEvent = () => {
 								<br />
 								<p className="h4 text-center py-4">Contacto y Lugar del Evento</p>
 
-								<label htmlFor="eventContactId" className="grey-text font-weight-light">
-									Contacto:
+								<label htmlFor="eventContacts" className="grey-text font-weight-light">
+									Contactos:
 								</label>
-								<select name="eventContactId" className="browser-default custom-select"
-									ref={register({
-										required: { message: 'Este campo es requerido', value: true }
-									})}>
-									<option value="0">Seleccione una opcion</option>
-									{contacts}
-								</select>
-								{errors.eventContactId && <span className="text-danger mb-2">{errors.eventContactId.message}</span>}
+								<Autocomplete
+									multiple
+									required
+									id="eventContacts"
+									options={contacts}
+									getOptionLabel={option => option.name}
+									onChange={(event, newValue) => {setEventContacts(newValue)}}
+									renderInput={params => (
+										<TextField {...params} label="Contactos" variant="outlined" fullWidth/>
+									)}
+								/>
 
 								<br />
 								<label htmlFor="eventLocationId" className="grey-text font-weight-light">

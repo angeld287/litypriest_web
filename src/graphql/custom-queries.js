@@ -49,9 +49,21 @@ export const getEvent = `query GetEvent($id: ID!) {
     location {
       id
       name
+      category {
+        id
+        name
+        description
+        module
+      }
+      contact {
+        id
+        name
+        phone
+      }
     }
     contacts {
       items {
+        id
         contact{
           id
           name
