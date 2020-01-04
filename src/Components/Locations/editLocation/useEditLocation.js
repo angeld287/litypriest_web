@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useForm from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
 import { API, graphqlOperation } from 'aws-amplify';
-import { getLocation } from '../../../graphql/queries';
+import { getLocation, listCategorys, listContacts } from '../../../graphql/queries';
 import { updateLocation } from '../../../graphql/mutations';
 import Swal from 'sweetalert2';
 
@@ -10,6 +10,9 @@ const useEditLocation = () => {
 	let history = useHistory();
 	let { id } = useParams();
 	const [ location, setLocation ] = useState({});
+	const [ locationName, setLocationName ] = useState("");
+	const [ category, setCategory ] = useState("");
+	const [ contact, setContact ] = useState({});
 	const [ error, setError ] = useState(false);
 	const { register, handleSubmit, errors } = useForm();
 
@@ -20,13 +23,24 @@ const useEditLocation = () => {
 				let locationApi = {};
 
 				try {
-					locationApi = await API.graphql(graphqlOperation(getLocation, { id }));
+					const location = await API.graphql(graphqlOperation(getLocation, { id }));
+					const categories = await API.graphql(graphqlOperation(listCategorys));
+					const contacts = await API.graphql(graphqlOperation(listContacts));
+
+					locationApi = {
+						location: location.data.getLocation,
+						categories: categories.data.listCategorys.items,
+						contacts: contacts.data.listContacts.items
+					}
 				} catch (e) {
 					setError(true);
 				}
 
 				if (!didCancel) {
-					setLocation(locationApi.data.getLocation);
+					setLocation(locationApi);
+					setCategory(locationApi.location.category === null ? "0" : locationApi.location.category.id)
+					setContact(locationApi.location.contact === null ? null : locationApi.location.contact)
+					setLocationName(locationApi.location.name);
 				}
 
 				return () => {
@@ -40,8 +54,26 @@ const useEditLocation = () => {
 	);
 
 	const onSubmit = async (input) => {
-		input.id = id;
 		try {
+
+			if(locationName == ""){
+				Swal.fire('Campo Obligatorio', 'Favor completar el campo Ubicacion', 'error');
+				return;
+			}
+
+			if(category == ""){
+				Swal.fire('Campo Obligatorio', 'Favor completar el campo Tipo de Ubicacion', 'error');
+				return;
+			}
+
+			if(contact.id == undefined){
+				Swal.fire('Campo Obligatorio', 'Favor completar el campo Contacto', 'error');
+				return;
+			}
+
+
+			const input = { id: id, name: locationName, locationCategoryId: category, locationContactId: contact.id};
+
 			await API.graphql(graphqlOperation(updateLocation, { input }));
 			await Swal.fire('Correcto', 'La ubicacion se ha actualizado correctamente', 'success');
 			history.push('/locations');
@@ -50,7 +82,7 @@ const useEditLocation = () => {
 		}
 	};
 
-	return { onSubmit, location, register, handleSubmit, errors, error };
+	return { onSubmit, location, register, handleSubmit, errors, error, setLocationName, locationName, setCategory, category, setContact, contact };
 };
 
 export default useEditLocation;
