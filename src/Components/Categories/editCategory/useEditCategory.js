@@ -12,6 +12,7 @@ const useEditCategory = () => {
 	const [ category, setCategory ] = useState({});
 	const [ error, setError ] = useState(false);
 	const { register, handleSubmit, errors } = useForm();
+	const [ _module, setModule ] = useState("");
 
 	useEffect(
 		() => {
@@ -27,6 +28,7 @@ const useEditCategory = () => {
 
 				if (!didCancel) {
 					setCategory(categoryApi.data.getCategory);
+					setModule(categoryApi.data.getCategory.module);
 				}
 
 				return () => {
@@ -42,7 +44,7 @@ const useEditCategory = () => {
 	const onSubmit = async (input) => {
 		input.id = id;
 		try {
-			await API.graphql(graphqlOperation(updateCategory, { input }));
+			await API.graphql(graphqlOperation(updateCategory, { input: {id: id, name: input.name, description: input.description, module: _module} }));
 			await Swal.fire('Correcto', 'La categoria se ha actualizado correctamente', 'success');
 			history.push('/categories');
 		} catch (e) {
@@ -50,7 +52,7 @@ const useEditCategory = () => {
 		}
 	};
 
-	return { onSubmit, category, register, handleSubmit, errors, error };
+	return { onSubmit, category, register, handleSubmit, errors, error, _module, setModule };
 };
 
 export default useEditCategory;

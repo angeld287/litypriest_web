@@ -29,7 +29,7 @@ const useEditEvent = () => {
 					const contacts = await API.graphql(graphqlOperation(listContacts));
 					eventApi = {
 						event: event.data.getEvent,
-						categories: categories.data.listCategorys.items,
+						categories: categories.data.listCategorys.items.filter(x => x.module === "event"),
 						locations: locations.data.listLocations.items,
 						contacts: contacts.data.listContacts.items,
 					};

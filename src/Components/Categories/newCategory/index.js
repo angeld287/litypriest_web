@@ -3,7 +3,7 @@ import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBCard, MDBCardBody } from 'mdbr
 import useNewCategory from './useNewCategory';
 
 const NewCategory = () => {
-	const { onSubmit, register, handleSubmit, errors, formState } = useNewCategory();
+	const { onSubmit, register, handleSubmit, errors, formState, setModule } = useNewCategory();
 
 	return (
 		<MDBContainer>
@@ -37,6 +37,19 @@ const NewCategory = () => {
 									ref={register({ required: { message: 'Este campo es requerido', value: true } })}
 								/>
 								{errors.description && <span className="text-danger mb-2">{errors.description.message}</span>}
+
+								<br />
+								<label htmlFor="name" className="grey-text font-weight-light">
+									Modulo:
+								</label>
+								<div>
+									<select id="module" required className="browser-default custom-select" onChange={ c => setModule(c.target.value)}>
+										<option value="">Seleccione una opcion</option>
+										<option value="location">Ubicacion</option>
+										<option value="event">Evento</option>
+									</select>
+								</div>
+								<br />
 
 								<div className="text-center py-4 mt-3">
 									<MDBBtn
