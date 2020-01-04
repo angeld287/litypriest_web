@@ -15,6 +15,7 @@ const Categories = () => {
 			formatedCategories.push({
 				name: category.name,
 				description: category.description,
+				module: category.module === null ? "N/A" : category.module,
 				options: (
 					<Fragment>
 						<Link to={`categories/${category.id}/edit`} className="btn btn-success btn-sm">
@@ -38,6 +39,11 @@ const Categories = () => {
 				{
 					label: 'Descripcion',
 					field: 'description',
+					sort: 'asc'
+				},
+				{
+					label: 'Modulo',
+					field: 'module',
 					sort: 'asc'
 				},
 				{

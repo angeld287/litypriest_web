@@ -29,7 +29,7 @@ const useNewLocation = () => {
 					const categories = await API.graphql(graphqlOperation(listCategorys));
 					const contacts = await API.graphql(graphqlOperation(listContacts));
 					api = {
-						categories: categories.data.listCategorys.items,
+						categories: categories.data.listCategorys.items.filter(x => x.module === "location"),
 						contacts: contacts.data.listContacts.items,
 					};
 					

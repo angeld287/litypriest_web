@@ -25,7 +25,7 @@ const useNewEvent = () => {
 					const locations = await API.graphql(graphqlOperation(listLocations));
 					const contacts = await API.graphql(graphqlOperation(listContacts));
 					eventApi = {
-						categories: categories.data.listCategorys.items,
+						categories: categories.data.listCategorys.items.filter(x => x.module === "event"),
 						locations: locations.data.listLocations.items,
 						contacts: contacts.data.listContacts.items,
 					};

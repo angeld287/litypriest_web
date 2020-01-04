@@ -29,7 +29,7 @@ const useEditLocation = () => {
 
 					locationApi = {
 						location: location.data.getLocation,
-						categories: categories.data.listCategorys.items,
+						categories: categories.data.listCategorys.items.filter(x => x.module === "location"),
 						contacts: contacts.data.listContacts.items
 					}
 				} catch (e) {
