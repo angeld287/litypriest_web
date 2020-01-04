@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const EditEvent = () => {
-	const { onSubmit, event, register, handleSubmit, errors, error, setValue, setEventLocationId, setDate } = useEditEvent();
+	const { onSubmit, event, register, handleSubmit, errors, error, setValue, setEventLocationId, setDate, setEventContacts } = useEditEvent();
 	
 	if (Object.entries(event).length === 0 && event.constructor === Object) return <Spinner />;
 
@@ -36,10 +36,17 @@ const EditEvent = () => {
       return (<option key={i} value={location.id}>{location.name}</option>)
     });
 
-	let contacts = event.contacts.filter(c => c.id !== contactid).map((contact, i) => {
-      return (<option key={i} value={contact.id}>{contact.name}</option>)
-    });
+	let contacts = event.contacts;
 
+	const eventContacts = event.event.contacts.items;
+	const defaultContacts = [];
+
+	eventContacts.forEach(e => {
+		console.log()
+		const contactIndex = contacts.findIndex(x => x.id === e.contact.id);
+		defaultContacts.push(contacts[contactIndex]);
+	});
+	
 	return (
 		<MDBContainer>
 			<form onSubmit={handleSubmit(onSubmit)}>
@@ -140,17 +147,21 @@ const EditEvent = () => {
 								<p className="h4 text-center py-4">Contacto y Lugar del Evento</p>
 
 								<br />
-								<label htmlFor="eventContactId" className="grey-text font-weight-light">
-									Contacto:
+								<label htmlFor="eventContacts" className="grey-text font-weight-light">
+									Contactos:
 								</label>
-								<select name="eventContactId" className="browser-default custom-select"
-									ref={register({
-										required: { message: 'Este campo es requerido', value: true }
-									})}>
-									<option value={contactid}>{contactname}</option>
-									{contacts}
-								</select>
-								{errors.eventContactId && <span className="text-danger mb-2">{errors.eventContactId.message}</span>}
+								<Autocomplete
+									multiple
+									required
+									id="eventContacts"
+									options={contacts}
+									getOptionLabel={option => option.name}
+									onChange={(event, newValue) => {setEventContacts(newValue)}}
+									renderInput={params => (
+										<TextField {...params} label="Contactos" variant="outlined" fullWidth/>
+									)}
+									defaultValue={defaultContacts}
+								/>
 
 								<br />
 								<label htmlFor="eventLocationId" className="grey-text font-weight-light">

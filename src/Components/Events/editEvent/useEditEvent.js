@@ -4,8 +4,9 @@ import { useHistory, useParams } from 'react-router-dom';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listCategorys, listLocations, listContacts } from '../../../graphql/queries';
 import { getEvent } from '../../../graphql/custom-queries';
-import { updateEvent, createEventContacts } from '../../../graphql/mutations';
+import { updateEvent, createEventContacts, deleteEventContacts } from '../../../graphql/mutations';
 import Swal from 'sweetalert2';
+import { uniq } from '../../Functions'
 
 const useEditEvent = () => {
 	let history = useHistory();
@@ -13,6 +14,8 @@ const useEditEvent = () => {
 	const [ event, setEvent ] = useState({});
 	const [ error, setError ] = useState(false);
 	const { register, handleSubmit, errors, setValue } = useForm();
+	const [ oldEventContacts, setOldEventContacts ] = useState([]);
+	const [ eventContacts, setEventContacts ] = useState([]);
 	const [ eventLocationId, setEventLocationId ] = useState('');
 	const [ date, setDate ] = useState(new Date());
 
@@ -39,6 +42,7 @@ const useEditEvent = () => {
 
 				if (!didCancel) {
 					setEvent(eventApi);
+					setOldEventContacts(eventApi.event.contacts.items);
 				}
 
 				return () => {
@@ -71,9 +75,9 @@ const useEditEvent = () => {
 			return;
 		}
 
-		if(input.eventContactId == "0"){
-			Swal.fire('Campo Obligatorio', 'Favor completar el campo Contacto', 'error');
-			return;
+		if(eventContacts == []){
+				Swal.fire('Campo Obligatorio', 'Favor completar el campo Contacto', 'error');
+				return;
 		}
 
 		if(eventLocationId !== ""){
@@ -90,9 +94,29 @@ const useEditEvent = () => {
 
 		try {
 			await API.graphql(graphqlOperation(updateEvent, {input: inputEvent} ));
-			if((inputEventContact.eventContactsContactId !== contactid) && (inputEventContact.eventContactsContactId !== "0")) {
-				await API.graphql(graphqlOperation(createEventContacts, {input: inputEventContact} ));
-			}
+			const updateContacts = uniq(eventContacts, "id");
+
+			//delete event contacts removed
+			oldEventContacts.forEach(e => {
+				const eventContactIndex = updateContacts.findIndex(x => x.id === e.contact.id)
+				if(eventContactIndex === -1){
+					API.graphql(graphqlOperation(deleteEventContacts, {input: {id: e.id}} ));
+				}
+			});
+
+			// create event contacts added
+			updateContacts.forEach(e => {
+				const inputEventContact = {
+					eventContactsEventId: inputEvent.id,
+					eventContactsContactId: e.id
+				};
+				const eventContact = oldEventContacts.findIndex(x => x.contact.id === e.id)
+				if(eventContact === -1){
+					API.graphql(graphqlOperation(createEventContacts, {input: inputEventContact} ));
+				}
+			});
+
+			
 			
 			await Swal.fire('Correcto', 'El evento se ha actualizado correctamente', 'success');
 			history.push('/events');
@@ -103,7 +127,7 @@ const useEditEvent = () => {
 		}
 	};
 
-	return { onSubmit, event, register, handleSubmit, setValue, errors, error, setEventLocationId, setDate };
+	return { onSubmit, event, register, handleSubmit, setValue, errors, error, setEventLocationId, setDate, setEventContacts };
 };
 
 export default useEditEvent;
