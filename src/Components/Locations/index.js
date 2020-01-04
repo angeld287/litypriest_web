@@ -14,6 +14,7 @@ const Locations = () => {
 			locations.forEach((location) => {
 				formatedLocations.push({
 					name: location.name,
+					category: location.category == null ? 'N/A' : location.category.name,
 					options: (
 						<Fragment>
 							<Link to={`locations/${location.id}/edit`} className="btn btn-success btn-sm">
@@ -32,6 +33,11 @@ const Locations = () => {
 				{
 					label: 'Nombre',
 					field: 'name',
+					sort: 'asc'
+				},
+				{
+					label: 'Tipo',
+					field: 'category',
 					sort: 'asc'
 				},
 				{
@@ -55,7 +61,7 @@ const Locations = () => {
 		);
 	}
 
-	if (error) return <h2>Ha ocurrido un error</h2>;
+	if (error) return <div><br/><br/><h2>Ha ocurrido un error</h2></div>;
 
 	return (
 		<MDBContainer>

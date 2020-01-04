@@ -12,6 +12,7 @@
     "aws-amplify": "^2.2.0",
     "aws-amplify-react": "^3.1.1",
     "globalize": "^1.4.2",
+    "lodash": "^4.17.15",
     "mdbreact": "git+https://oauth2:ezM_KG5EdJ2xpPok5YHF@git.mdbootstrap.com/mdb/react/re-pro.git",
     "moment": "^2.24.0",
     "react": "^16.12.0",

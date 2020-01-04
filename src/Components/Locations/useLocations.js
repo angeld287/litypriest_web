@@ -23,11 +23,11 @@ const useLocations = () => {
 			}
 
 			if (!didCancel) {
-				setLocations(locationsApi.data.listLocations.items);
+				const locations = locationsApi.data === undefined ? [] : locationsApi.data.listLocations.items;
+				setLocations(locations);
 				setLoading(false);
 			}
 		};
-
 		fetchLocations();
 
 		return () => {
