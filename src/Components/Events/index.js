@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
 import useEvents from './useEvents';
 import { Link } from 'react-router-dom';
-import { MDBContainer, MDBBox, MDBDataTable, MDBBtn } from 'mdbreact';
+import { MDBContainer, MDBBox, MDBDataTable, MDBBtn, MDBCol, MDBRow, MDBIcon, MDBDatePicker } from 'mdbreact';
 import Spinner from '../Spinner/Spinner';
 
 import './index.css';
 
 const Events = () => {
-	const { loading, error, events, handleDeleteEvent } = useEvents();
+	const { loading, error, events, handleDeleteEvent, setDateFrom, setDateTo, handleExportExcel } = useEvents();
 
 	//(event.data.getEvent.contacts.items[0] === undefined)?("0"):(event.data.getEvent.contacts.items[0].contact.id);
 	const data = () => {
@@ -107,6 +107,25 @@ const Events = () => {
 				paginationLabel={[ 'Anterior', 'Siguiente' ]}
 				noBottomColumns={true}
 			/>
+			<br/>
+			<br/>
+			<h3 className="mt-5">Reporte de Eventos (Excel)</h3>
+			<br/>
+			<MDBRow className="text-center" style={{width: '100%'}}>
+					<MDBCol md="4">
+						Fecha Desde: <MDBDatePicker getValue={ d => setDateFrom(d)} />
+					</MDBCol>
+					<MDBCol md="4">
+						<div>
+							Fecha Hasta: <MDBDatePicker getValue={ d => setDateTo(d)} />
+						</div>
+					</MDBCol>
+					<MDBCol md="4">
+						<MDBBtn tag="a" floating color="blue" className="accent-1">
+							<MDBIcon icon="download" onClick={() => handleExportExcel()} />
+						</MDBBtn>
+					</MDBCol>
+          	</MDBRow>
 		</MDBContainer>
 	);
 };
