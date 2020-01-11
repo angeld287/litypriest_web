@@ -22,7 +22,7 @@ const useEvents = () => {
             var eventsApi = [];
 
             try {
-                eventsApi = await API.graphql(graphqlOperation(listEvents));
+                eventsApi = await API.graphql(graphqlOperation(listEvents, {limit: 400}));
             } catch (error) {
                 setLoading(false);
                 setError(true);
