@@ -1,38 +1,48 @@
-import React, { Component } from "react";
-import { MDBContainer } from "mdbreact"
-import { Link } from 'react-router-dom';
-import { Calendar, momentLocalizer } from "react-big-calendar";
-import moment from "moment";
-import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
+import React from 'react'
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import listPlugin from '@fullcalendar/list';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listEvents } from '../../graphql/queries';
+import moment from "moment";
+import { Link } from 'react-router-dom';
 
-import "./EventsCalendar.css";
-import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
-import "react-big-calendar/lib/css/react-big-calendar.css";
+import { MDBContainer } from "mdbreact"
 
-const localizer = momentLocalizer(moment);
-const DnDCalendar = withDragAndDrop(Calendar);
+import './main.scss' // webpack must be configured to do this
 
-class EventsCalendar extends Component {
-  
+const header = {
+      left: 'dayGridMonth,timeGridWeek,timeGridDay today',
+      center: 'title',
+      right: 'custom2 prevYear,prev,next,nextYear'
+    };
+
+export default class DemoApp extends React.Component {
+
   state = {
     events: []
   };
 
-	fetchEvents = async () => {
+  fetchEvents = async () => {
 		try {
 			const eventsJson = await API.graphql(graphqlOperation(listEvents));
       const eventsData = eventsJson.data.listEvents.items
       const events = [];
 
       eventsData.forEach(e => {
-        const date = new Date(e.date);
-        date.setDate(date.getDate() + 1)
+        console.log(e.duration);
+        
+        const date = new Date(e.date)
+        const endDate = new Date(e.date)
+        const duration = parseInt(e.duration); 
+        endDate.setHours(endDate.getHours() + duration)
+
         const event = {
-          start: date,
-          end: date,
-          title: <Link to={`events/${e.id}/details`} className="btn-info btn-sm" style={{height: 30}}>{e.name}...</Link>
+          start: moment(date).format("YYYY-MM-DDTHH:mm:SS"),
+          end: moment(endDate).format("YYYY-MM-DDTHH:mm:SS"),
+          title: e.name,
+          url: `events/${e.id}/details`
         }
         events.push(event);
       });
@@ -46,40 +56,22 @@ class EventsCalendar extends Component {
 		}
 	};
 
-	componentDidMount = async () => {
+  componentDidMount = async () => {
 		this.fetchEvents();
 	};
 
-  /* onEventResize = (type, { event, start, end, allDay }) => {
-    this.setState(state => {
-      state.events[0].start = start;
-      state.events[0].end = end;
-      return { events: state.events };
-    });
-  };
-
-  onEventDrop = ({ event, start, end, allDay }) => {
-    console.log(start);
-  }; */
-
   render() {
     return (
-      <MDBContainer>
-        <div className="App">
-          <DnDCalendar
-            defaultDate={new Date()}
-            defaultView="month"
-            events={this.state.events}
-            localizer={localizer}
-            onEventDrop={this.onEventDrop}
-            onEventResize={this.onEventResize}
-            resizable
-            style={{ height: "100vh" }}
+      <MDBContainer style={{marginTop: 100}}>
+        <FullCalendar 
+          defaultView="dayGridMonth" 
+          plugins={[ dayGridPlugin, timeGridPlugin, listPlugin ]} 
+          events={this.state.events}
+          header={header}
+          navLinks={true}
           />
-        </div>
       </MDBContainer>
-    );
+    )
   }
-}
 
-export default EventsCalendar;
+}
