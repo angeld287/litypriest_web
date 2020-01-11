@@ -26,13 +26,11 @@ export default class DemoApp extends React.Component {
 
   fetchEvents = async () => {
 		try {
-			const eventsJson = await API.graphql(graphqlOperation(listEvents));
+			const eventsJson = await API.graphql(graphqlOperation(listEvents, {limit: 400}));
       const eventsData = eventsJson.data.listEvents.items
       const events = [];
 
       eventsData.forEach(e => {
-        console.log(e.duration);
-        
         const date = new Date(e.date)
         const endDate = new Date(e.date)
         const duration = parseInt(e.duration); 

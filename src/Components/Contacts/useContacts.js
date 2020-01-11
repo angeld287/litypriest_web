@@ -16,7 +16,7 @@ const useContacts = () => {
 			var contactsApi = [];
 
 			try {
-				contactsApi = await API.graphql(graphqlOperation(listContacts));
+				contactsApi = await API.graphql(graphqlOperation(listContacts, {limit: 400}));
 			} catch (error) {
 				setLoading(false);
 				setError(true);
