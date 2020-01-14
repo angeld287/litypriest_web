@@ -24,8 +24,8 @@ const useEditLocation = () => {
 
 				try {
 					const location = await API.graphql(graphqlOperation(getLocation, { id }));
-					const categories = await API.graphql(graphqlOperation(listCategorys));
-					const contacts = await API.graphql(graphqlOperation(listContacts));
+					const categories = await API.graphql(graphqlOperation(listCategorys, {limit: 400}));
+					const contacts = await API.graphql(graphqlOperation(listContacts, {limit: 400}));
 
 					locationApi = {
 						location: location.data.getLocation,
