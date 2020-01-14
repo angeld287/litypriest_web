@@ -27,9 +27,9 @@ const useEditEvent = () => {
 
 				try {
 					const event = await API.graphql(graphqlOperation(getEvent, { id }));
-					const categories = await API.graphql(graphqlOperation(listCategorys));
-					const locations = await API.graphql(graphqlOperation(listLocations));
-					const contacts = await API.graphql(graphqlOperation(listContacts));
+					const categories = await API.graphql(graphqlOperation(listCategorys, {limit: 400}));
+					const locations = await API.graphql(graphqlOperation(listLocations, {limit: 400}));
+					const contacts = await API.graphql(graphqlOperation(listContacts, {limit: 400}));
 					eventApi = {
 						event: event.data.getEvent,
 						categories: categories.data.listCategorys.items.filter(x => x.module === "event"),

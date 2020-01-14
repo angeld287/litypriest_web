@@ -84,7 +84,8 @@ const useEvents = () => {
                         	{or: [{date: {gt: _dateFrom}}, {date: {eq: _dateFrom}},]},
                             {or: [{date: {lt: _dateTo}}, {date: {eq: _dateTo}},]}
 							]
-                        }
+                        },
+                    limit: 400
                     })
                 );
 				

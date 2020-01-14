@@ -16,7 +16,7 @@ const useLocations = () => {
 			var locationsApi = [];
 
 			try {
-				locationsApi = await API.graphql(graphqlOperation(listLocations));
+				locationsApi = await API.graphql(graphqlOperation(listLocations, {limit: 400}));
 			} catch (error) {
 				setLoading(false);
 				setError(true);
